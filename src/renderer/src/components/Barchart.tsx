@@ -45,7 +45,7 @@ function Barchart() {
     <Paper shadow="sm" radius="md" withBorder p="md" style={{ height: 575 }}>
       <Flex justify="center" mb="md" align="center" direction="row">
         <Text c="dimmed" style={{ fontWeight: 700, textTransform: 'uppercase' }}>
-          Dashboard Delivery Minus From Production ( {dayjs().format('DD-MMM-YYYY')} )
+          Dashboard Delivery Minus From Production. ( {dayjs().format('DD-MMM-YYYY')} )
         </Text>
       </Flex>
       <ResponsiveContainer width="100%" height="90%">
