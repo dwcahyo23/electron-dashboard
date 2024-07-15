@@ -13,6 +13,7 @@ import clsx from 'clsx'
 import { Link, Outlet, RouterProvider, createBrowserRouter } from 'react-router-dom'
 import classes from '../src/styles/App.module.css'
 import Clock from './components/Clock'
+import UpdateElectron from './components/update/index'
 import Dashboard from './pages/Dashboard'
 import DownloadFile from './pages/DownloadFile'
 import UploadFile from './pages/UploadFile'
@@ -54,7 +55,13 @@ function N404() {
 }
 
 export default function App() {
-  return <RouterProvider router={router} fallbackElement={<p>Loading...</p>} />
+  return (
+    <div>
+      {' '}
+      <RouterProvider router={router} fallbackElement={<p>Loading...</p>} />
+      <UpdateElectron />
+    </div>
+  )
 }
 
 function Layout() {

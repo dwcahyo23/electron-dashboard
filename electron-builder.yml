@@ -40,6 +40,7 @@ appImage:
 npmRebuild: false
 publish:
   provider: generic
-  url: https://example.com/auto-updates
+  channel: latest
+  url: https://github.com/dwcahyo23/electron-dashboard/releases/tag/v1.0.0
 electronDownload:
-  mirror: https://npmmirror.com/mirrors/electron/
+  mirror: https://github.com/dwcahyo23/electron-dashboard/releases/tag/v1.0.0

@@ -1,3 +1,4 @@
 provider: generic
-url: https://example.com/auto-updates
+channel: latest
+url: https://github.com/dwcahyo23/electron-dashboard/releases/tag/v1.0.0
 updaterCacheDirName: electron-dashboard-updater
