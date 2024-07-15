@@ -1,7 +1,5 @@
 import { electronApp, is, optimizer } from '@electron-toolkit/utils'
 import { BrowserWindow, app, ipcMain, shell } from 'electron'
-import log from 'electron-log'
-import { autoUpdater } from 'electron-updater'
 import { join } from 'path'
 import icon from '../../resources/icon.png?asset'
 
@@ -21,7 +19,6 @@ function createWindow(): void {
 
   mainWindow.on('ready-to-show', () => {
     mainWindow.show()
-    autoUpdater.checkForUpdatesAndNotify()
   })
 
   mainWindow.webContents.setWindowOpenHandler((details) => {
@@ -36,34 +33,6 @@ function createWindow(): void {
   } else {
     mainWindow.loadFile(join(__dirname, '../renderer/index.html'))
   }
-
-  // Send Status to Window (AutoUpdater)
-  function sendStatusToWindow(text) {
-    log.info(text)
-    mainWindow.webContents.send('message', text)
-  }
-
-  autoUpdater.on('checking-for-update', () => {
-    sendStatusToWindow('Checking for update...')
-  })
-  autoUpdater.on('update-available', (info) => {
-    sendStatusToWindow('Update available. ' + info)
-  })
-  autoUpdater.on('update-not-available', () => {
-    sendStatusToWindow('Update not available.')
-  })
-  autoUpdater.on('error', (err) => {
-    sendStatusToWindow('Error in auto-updater. ' + err)
-  })
-  autoUpdater.on('download-progress', (progressObj) => {
-    let log_message = 'Download speed: ' + progressObj.bytesPerSecond
-    log_message = log_message + ' - Downloaded ' + progressObj.percent + '%'
-    log_message = log_message + ' (' + progressObj.transferred + '/' + progressObj.total + ')'
-    sendStatusToWindow(log_message)
-  })
-  autoUpdater.on('update-downloaded', () => {
-    sendStatusToWindow('Update downloaded')
-  })
 }
 
 // This method will be called when Electron has finished
