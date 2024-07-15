@@ -8,12 +8,12 @@ import CardReponsible from './CardReponsible'
 import Loading from './Loading'
 
 function Responsible() {
-  const [apiArg, setApiArg] = useState<DelayApiInfoUserArg>({
+  const [apiArg] = useState<DelayApiInfoUserArg>({
     year: dayjs().get('year'),
     month: dayjs().get('month') + 1
   })
 
-  const [intervalMs, setIntervalMs] = useState<number>(60000)
+  const [intervalMs] = useState<number>(60000)
 
   const { isLoading, data: { data: CustUser } = {} } = useQuery<DelayedApiInfoUserResponse>({
     queryKey: ['delayApiInfoUser', apiArg],

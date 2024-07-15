@@ -24,7 +24,7 @@ function CardDelayed(prop: DelayedToday) {
   const [url, setUrl] = useState<string>('')
 
   useEffect(() => {
-    setUrl(`http://10.23.29.77:3006/update/${cust_no}/${part_no}/${dwg_no}/${date}`)
+    setUrl(`http://192.168.192.7:3006/update/${cust_no}/${part_no}/${dwg_no}/${date}`)
   }, [])
 
   return (

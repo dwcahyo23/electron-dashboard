@@ -8,15 +8,12 @@ import CardDelayed from '@renderer/components/CardDelayed'
 import { DelayApiResponse } from '@renderer/types/Api'
 import { useQuery } from '@tanstack/react-query'
 import axios from 'axios'
-import useSound from 'use-sound'
-import notif1 from '../sound/notification1.mp3'
 import classes from '../styles/Carousel.module.css'
 import Loading from './Loading'
 
 function CarouselDelayed() {
   const autoplay = useRef(Autoplay({ delay: 5000 }))
-  const [intervalMs, setIntervalMs] = useState<number>(60000)
-  const [play] = useSound(notif1)
+  const [intervalMs] = useState<number>(60000)
 
   const { isLoading, data: { data: delayToday } = {} } = useQuery<DelayApiResponse>({
     queryKey: ['delayToday'],

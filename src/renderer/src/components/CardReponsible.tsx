@@ -37,11 +37,11 @@ function CardReponsible(props: DelayedInfoUser) {
             roundCaps
             thickness={5}
             size={75}
-            sections={[{ value: (props.close / props.count) * 100, color: theme.primaryColor }]}
+            sections={[{ value: (props.close! / props.count!) * 100, color: theme.primaryColor }]}
             label={
               <div>
                 <Text ta="center" fz="md" className={classes.label}>
-                  {((props.close / props.count) * 100).toFixed(0)}%
+                  {((props.close! / props.count!) * 100).toFixed(0)}%
                 </Text>
               </div>
             }

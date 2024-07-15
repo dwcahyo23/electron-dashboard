@@ -27,7 +27,7 @@ const CustomizeDot = (prop) => {
 }
 
 function Barchart() {
-  const [intervalMs, setIntervalMs] = useState<number>(60000)
+  const [intervalMs] = useState<number>(60000)
 
   const { isLoading, data: { data: CustInfo } = {} } = useQuery<DelayApiInfoCustResponse>({
     queryKey: ['delayApiInfoCust'],
