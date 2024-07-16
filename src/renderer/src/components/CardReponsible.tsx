@@ -1,9 +1,17 @@
 import { Card, Grid, Group, RingProgress, Text, useMantineTheme } from '@mantine/core'
 import { DelayedInfoUser } from '@renderer/types/Api'
 import { IconTicket } from '@tabler/icons-react'
+import { useEffect, useState } from 'react'
+import QRCode from 'react-qr-code'
 import classes from '../styles/StatsGridIcons.module.css'
 
 function CardReponsible(props: DelayedInfoUser) {
+  const [url, setUrl] = useState<string>('')
+
+  useEffect(() => {
+    setUrl(`http://192.168.192.7:3006/update/user/${props.user}`)
+  }, [])
+
   const theme = useMantineTheme()
   return (
     <Card shadow="sm" radius="md" withBorder style={{ width: '100%' }}>
@@ -13,8 +21,8 @@ function CardReponsible(props: DelayedInfoUser) {
         </Text>
         <IconTicket className={classes.icon} size="1.4rem" stroke={1.5} />
       </Group>
-      <Grid>
-        <Grid.Col span={8}>
+      <Grid grow gutter="xs">
+        <Grid.Col span={5}>
           <Group align="flex-end" gap="xs" mt={25}>
             <Text
               className={classes.value}
@@ -46,6 +54,9 @@ function CardReponsible(props: DelayedInfoUser) {
               </div>
             }
           />
+        </Grid.Col>
+        <Grid.Col span={3}>
+          <QRCode style={{ height: '100%', maxWidth: '100%' }} value={url} />
         </Grid.Col>
       </Grid>
     </Card>

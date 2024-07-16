@@ -45,7 +45,7 @@ function Barchart() {
     <Paper shadow="sm" radius="md" withBorder p="md" style={{ height: 575 }}>
       <Flex justify="center" mb="md" align="center" direction="row">
         <Text c="dimmed" style={{ fontWeight: 700, textTransform: 'uppercase' }}>
-          Dashboard Delivery Minus From Production. ( {dayjs().format('DD-MMM-YYYY')} )
+          Dashboard Delivery Minus From Production ( {dayjs().format('DD-MMM-YYYY')} )
         </Text>
       </Flex>
       <ResponsiveContainer width="100%" height="90%">
@@ -60,7 +60,12 @@ function Barchart() {
             tickFormatter={(val) => val.toLocaleString()}
           />
           <YAxis yAxisId="right" orientation="right" stroke="#E4003A" />
-          <Tooltip />
+          <Tooltip
+            formatter={(val) => `${val.toLocaleString()}`}
+            labelFormatter={(val) =>
+              `${val} - ${CustInfo?.find((n) => n.cust_no === val)?.cust_nm}`
+            }
+          />
           <Legend />
           <Bar
             yAxisId="left"
@@ -91,7 +96,7 @@ function Barchart() {
           <Bar
             yAxisId="left"
             dataKey="sum_delay_tm"
-            name="Total Quantity Today (Pcs)"
+            name="Total Quantity Tomorrow (Pcs)"
             fill="#36BA98"
             label={{
               position: 'inside',
