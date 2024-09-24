@@ -1,5 +1,6 @@
 import { electronApp, is, optimizer } from '@electron-toolkit/utils'
 import { BrowserWindow, app, ipcMain, shell } from 'electron'
+import { autoUpdater } from 'electron-updater'
 import { join } from 'path'
 import icon from '../../resources/icon.png?asset'
 
@@ -52,7 +53,33 @@ app.whenReady().then(() => {
   // IPC test
   ipcMain.on('ping', () => console.log('pong'))
 
+  // Auto updater events
+  autoUpdater.on('update-available', () => {
+    console.log('Update available. Downloading...')
+  })
+
+  autoUpdater.on('update-not-available', () => {
+    console.log('Update not available.')
+  })
+
+  autoUpdater.on('error', (error) => {
+    console.error('Error in auto-updater:', error)
+  })
+
+  autoUpdater.on('download-progress', (progressObj) => {
+    console.log(`Download speed: ${progressObj.bytesPerSecond}`)
+    console.log(`Downloaded ${progressObj.percent}%`)
+    console.log(`Downloaded ${progressObj.transferred} of ${progressObj.total} bytes`)
+  })
+
+  autoUpdater.on('update-downloaded', () => {
+    console.log('Update downloaded; will install now')
+    autoUpdater.quitAndInstall() // Install the update
+  })
+
   createWindow()
+
+  autoUpdater.checkForUpdates()
 
   app.on('activate', function () {
     // On macOS it's common to re-create a window in the app when the

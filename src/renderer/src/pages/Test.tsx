@@ -6,7 +6,8 @@ import { BaseResponse } from '@renderer/types/base/response.type'
 import { EntityPdApqLeaderDailyProgresInterface } from '@renderer/types/pdApqLeaderDailyProgres/entities/pdApqLeaderDailyProgres.entity'
 import { EntityPdApqLeaderMonthlyProgresInterface } from '@renderer/types/pdApqLeaderMonthlyProgres/entities/pdApqLeaderMonthlyProgres.entity'
 import { EntityPdApqLeaderWeeklyProgresInterface } from '@renderer/types/pdApqLeaderWeeklyProgres/entities/pdApqLeaderWeeklyProgres.entity'
-import { EntityPdApqSectionInterface } from '@renderer/types/pdApqSection/entities/pdApqSection.entity'
+import { EntityPdApqSectionMonthlyInterface } from '@renderer/types/pdApqSectionMonthly/entities/pdApqSectionMonthly.entity'
+import { EntityPdApqSectionWeeklyInterface } from '@renderer/types/pdApqSectionWeekly/entities/pdApqSectionWeekly.entity'
 import { EntityPdApqUserDailyProgresInterface } from '@renderer/types/pdApqUserDailyProgres/entities/pdApqUserDailyProgres.entity'
 import { EntityPdApqUserDailyWorstAndBestInterface } from '@renderer/types/pdApqUserDailyWorstAndBest/entities/pdApqUserDailyWorstAndBest.entity'
 import { EntityPdApqUserMonthlyProgresInterface } from '@renderer/types/pdApqUserMonthlyProgres/entities/pdApqUserMonthlyProgres.entity'
@@ -40,7 +41,7 @@ const OverviewCard = ({ title, content }) => (
 
 // Komponen Test
 const Test = () => {
-  const [timeRange, setTimeRange] = useState('daily') // Default to 'daily'
+  const [timeRange, setTimeRange] = useState('monthly') // Default to 'monthly'
   const [section, setSection] = useState<'Machining' | 'Forming' | 'Heat Treatment' | 'All'>('All') // Default to 'all'
 
   // URL berdasarkan timeRange
@@ -179,27 +180,50 @@ const Test = () => {
     }
   }
 
-  const fetchChartData = async (): Promise<EntityPdApqSectionInterface[]> => {
-    const { data } =
-      await axios.get<BaseResponse<EntityPdApqSectionInterface[]>>('/api/v1/pdapq/section') // Replace with your API URL
-    return data.data.map((item) => {
-      // Menghapus spasi dari month_name
-      const cleanedMonthName = item.month_name.replace(/\s+/g, '')
-
-      // Memangkas 3 karakter pertama jika tidak mengandung 'Avg'
-      const finalMonthName = cleanedMonthName.includes('Avg')
-        ? cleanedMonthName
-        : cleanedMonthName.slice(0, 3)
-
-      return {
-        ...item,
-        avaibility: Math.round(item.avaibility * 100),
-        performance: Math.round(item.performance * 100),
-        quality: Math.round(item.quality * 100),
-        oee: Math.round(item.oee * 100),
-        month_name: finalMonthName // Gunakan month_name yang sudah dimodifikasi
+  const fetchChartData = async (
+    timeRange: string
+  ): Promise<EntityPdApqSectionMonthlyInterface[] | EntityPdApqSectionWeeklyInterface[]> => {
+    try {
+      const urlMap = {
+        weekly: '/api/v1/pdapq/section/weekly',
+        monthly: '/api/v1/pdapq/section/monthly'
       }
-    })
+
+      let url = timeRange !== 'daily' ? urlMap[timeRange] : urlMap.monthly
+
+      // Add section filter to the query if section is not 'all' and timeRange is not 'daily'
+      if (section !== 'All' && timeRange !== 'daily') {
+        url += `?section=${section}`
+      }
+
+      const { data } =
+        await axios.get<
+          BaseResponse<EntityPdApqSectionMonthlyInterface[] | EntityPdApqSectionWeeklyInterface[]>
+        >(url)
+
+      // Format the fetched data
+      return data.data.map((item) => {
+        const cleanedName = item.name.replace(/\s+/g, '')
+
+        // Memangkas 3 karakter pertama jika tidak mengandung 'Avg'
+        const finalName =
+          cleanedName.includes('Avg') || cleanedName.length < 6
+            ? cleanedName
+            : cleanedName.slice(0, 3)
+
+        return {
+          ...item,
+          avaibility: Math.round(item.avaibility * 100),
+          performance: Math.round(item.performance * 100),
+          quality: Math.round(item.quality * 100),
+          oee: Math.round(item.oee * 100),
+          name: finalName
+        }
+      })
+    } catch (error) {
+      console.error(`Error fetching ${timeRange} progress:`, error)
+      throw new Error(`Error fetching ${timeRange} progress: ${error}`)
+    }
   }
 
   const {
@@ -236,9 +260,9 @@ const Test = () => {
     data: chartData = [],
     isLoading: isLoadingChartData,
     refetch: refetchChartData
-  } = useQuery<EntityPdApqSectionInterface[]>({
-    queryKey: ['chartData'],
-    queryFn: fetchChartData,
+  } = useQuery<EntityPdApqSectionMonthlyInterface[] | EntityPdApqSectionWeeklyInterface[]>({
+    queryKey: ['chartData', timeRange],
+    queryFn: () => fetchChartData(timeRange), // Pass timeRange to the fetch function
     refetchInterval: 60000 // Refetch every 60 seconds
   })
 
@@ -293,12 +317,11 @@ const Test = () => {
   ]
 
   useEffect(() => {
-    if (section !== 'All') {
-      refetchUsers()
-      refetchWorstAndBest()
-      refetchLeaders()
-    }
-  }, [section])
+    refetchUsers()
+    refetchWorstAndBest()
+    refetchLeaders()
+    if (timeRange !== 'daily') refetchChartData()
+  }, [section, timeRange])
 
   if (isLoadingUsers || isLoadingWorstAndBest || isLoadingLeader || isLoadingChartData) {
     return <Loader />
@@ -335,8 +358,8 @@ const Test = () => {
             data={chartData}
             bars={bars}
             lines={lines}
-            xAxisKey="month_name"
-            chartTitle="Machining Dashboard"
+            xAxisKey="name"
+            chartTitle={`${section} Dashboard`}
             yAxes={yAxes}
           />
         </Grid.Col>

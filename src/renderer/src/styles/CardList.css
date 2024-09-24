@@ -24,7 +24,7 @@
 	}
 
 	100% {
-		transform: translateY(-1200px);
+		transform: translateY(-100%);
 		/* Adjust this value based on the total height of duplicated data */
 	}
 }

@@ -9,17 +9,22 @@ import {
   Text,
   useMantineColorScheme
 } from '@mantine/core'
-import { EntityPdApqLeaderDailyProgresInterface } from '@renderer/types/pdApqLeaderDailyProgres/entities/pdApqLeaderDailyProgres.entity'
+import { EntityPdApqUserDailyProgresInterface } from '@renderer/types/pdApqUserDailyProgres/entities/pdApqUserDailyProgres.entity'
+import { EntityPdApqUserMonthlyProgresInterface } from '@renderer/types/pdApqUserMonthlyProgres/entities/pdApqUserMonthlyProgres.entity'
+import { EntityPdApqUserWeeklyProgresInterface } from '@renderer/types/pdApqUserWeeklyProgres/entities/pdApqUserWeeklyProgres.entity'
 import { IconArrowDown, IconArrowUp, IconMinus } from '@tabler/icons-react'
 import { useEffect, useState } from 'react'
 import { animated } from 'react-spring'
 import { AutoSizer, CellMeasurerCache, List } from 'react-virtualized'
 
 interface UserCarouselVirtualizedProps {
-  users: EntityPdApqLeaderDailyProgresInterface[]
+  users:
+    | EntityPdApqUserDailyProgresInterface[]
+    | EntityPdApqUserWeeklyProgresInterface[]
+    | EntityPdApqUserMonthlyProgresInterface[]
 }
 
-interface UserCardProps extends EntityPdApqLeaderDailyProgresInterface {}
+interface UserCardProps extends EntityPdApqUserDailyProgresInterface {}
 
 const trendStyles = {
   up: { color: 'green', icon: <IconArrowUp size={16} /> },
@@ -82,7 +87,7 @@ function UserCard({
             OEE: {Math.round(oee)} %
           </Text>
           <Text fw={600} size="sm" color={color}>
-            {icon} {change_percent.toFixed(2)}%
+            {icon} {change_percent?.toFixed(2)}%
           </Text>
         </Center>
       </Stack>

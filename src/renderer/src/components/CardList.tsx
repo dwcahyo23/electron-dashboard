@@ -77,7 +77,7 @@ const CardList: React.FC<CardListProps> = ({ data, title }) => {
 
   // Determine if the animation should be applied and whether to duplicate data
   const shouldAnimate = totalHeight > containerHeight
-  const displayedData = shouldAnimate ? [...data, ...data] : data // Duplicate data only if needed
+  const displayedData = shouldAnimate ? [...data] : data // Duplicate data only if needed
 
   return (
     <Paper
@@ -110,7 +110,7 @@ const CardList: React.FC<CardListProps> = ({ data, title }) => {
         <div
           className="card-list"
           style={{
-            animation: shouldAnimate ? 'moveDown 80s linear infinite' : 'none',
+            animation: shouldAnimate ? `moveDown ${totalHeight / 20}s linear infinite` : 'none', // Adjust duration based on total height
             marginBottom: '-60px'
           }}
         >

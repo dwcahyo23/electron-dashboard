@@ -1,7 +1,7 @@
-export interface PdApqSectionInterface {
+export interface PdApqSectionWeeklyInterface {
   section: string;
-  month: number;
-  month_name: string;
+  week: number;
+  name: string;
   avaibility: number;
   performance: number;
   quality: number;

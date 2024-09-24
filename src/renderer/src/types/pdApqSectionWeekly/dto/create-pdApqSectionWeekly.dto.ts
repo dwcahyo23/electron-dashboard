@@ -1,7 +1,7 @@
-export interface EntityPdApqSectionInterface {
+export interface CreatePdApqSectionWeeklyInterface {
   section: string;
-  month: number;
-  month_name: string;
+  week: number;
+  name: string;
   avaibility: number;
   performance: number;
   quality: number;

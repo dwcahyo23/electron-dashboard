@@ -1,7 +1,7 @@
-export interface UpdatePdApqSectionInterface {
+export interface UpdatePdApqSectionMonthlyInterface {
   section?: string;
   month?: number;
-  month_name?: string;
+  name?: string;
   avaibility?: number;
   performance?: number;
   quality?: number;
