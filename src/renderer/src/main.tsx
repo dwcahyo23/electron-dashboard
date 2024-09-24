@@ -12,7 +12,7 @@ const queryClient = new QueryClient()
 /**
  * Axios HTTP Request defaults
  */
-axios.defaults.baseURL = 'http://192.168.192.7:5001/'
+axios.defaults.baseURL = 'http://localhost:5001/'
 axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*'
 axios.defaults.headers.common['Content-Type'] = 'application/json'
 

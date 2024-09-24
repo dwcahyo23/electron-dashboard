@@ -19,3 +19,17 @@ export type FileExcel = {
   user_check?: string
   date?: Date
 }
+
+export type ExcelApq = {
+  section: string
+  nik_tl: string
+  tl: string
+  nik_operator: string
+  operator: string
+  date: Date
+  avaibility: number
+  performance: number
+  quality: number
+  oee?: number
+  com: number
+}

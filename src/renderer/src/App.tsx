@@ -15,6 +15,8 @@ import classes from '../src/styles/App.module.css'
 import Clock from './components/Clock'
 import Dashboard from './pages/Dashboard'
 import DownloadFile from './pages/DownloadFile'
+import Test from './pages/Test'
+import UploadApq from './pages/UploadApq'
 import UploadFile from './pages/UploadFile'
 
 const router = createBrowserRouter([
@@ -23,12 +25,21 @@ const router = createBrowserRouter([
     element: <Layout />,
     children: [
       {
-        index: true,
+        path: 'dasboardPdDelay',
         element: <Dashboard />
+      },
+      {
+        path: 'test',
+        element: <Test />
       },
       {
         path: 'upload',
         element: <UploadFile />
+      },
+      {
+        index: true,
+        path: 'uploadApq',
+        element: <UploadApq />
       },
       {
         path: 'download',
@@ -56,7 +67,7 @@ function N404() {
 export default function App() {
   return (
     <div>
-      <RouterProvider router={router} fallbackElement={<p>Loading...</p>} />
+      <RouterProvider router={router} />
       {/* <UpdateElectron /> */}
     </div>
   )
@@ -78,15 +89,23 @@ function Layout() {
           <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
           <Group justify="space-between" style={{ flex: 1 }}>
             <Group ml="md" gap={0} visibleFrom="sm">
-              <UnstyledButton component={Link} to="/" className={classes.control}>
+              {/* <UnstyledButton component={Link} to="/" className={classes.control}>
                 Dashboard
-              </UnstyledButton>
-              <UnstyledButton component={Link} to="upload" className={classes.control}>
+              </UnstyledButton> */}
+              <UnstyledButton component={Link} to="uploadApq" className={classes.control}>
                 Upload
               </UnstyledButton>
-              <UnstyledButton component={Link} to="download" className={classes.control}>
-                Download
+              <UnstyledButton component={Link} to="test" className={classes.control}>
+                Test
               </UnstyledButton>
+
+              {/* <UnstyledButton component={Link} to="upload" className={classes.control}>
+                Upload Delayed
+              </UnstyledButton> */}
+
+              {/* <UnstyledButton component={Link} to="download" className={classes.control}>
+                Download
+              </UnstyledButton> */}
             </Group>
           </Group>
           <Group justify="flex-end" style={{ flex: 1 }}>
@@ -106,15 +125,6 @@ function Layout() {
           </Group>
         </Group>
       </AppShell.Header>
-
-      <AppShell.Navbar py="md" px={4}>
-        <UnstyledButton component={Link} to="/" className={classes.control}>
-          Dashboard
-        </UnstyledButton>
-        <UnstyledButton component={Link} to="upload" className={classes.control}>
-          Upload
-        </UnstyledButton>
-      </AppShell.Navbar>
 
       <AppShell.Main>
         <Outlet />

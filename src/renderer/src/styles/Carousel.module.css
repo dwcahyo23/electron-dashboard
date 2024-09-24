@@ -1,12 +1,117 @@
-.controls {
-	transition: opacity 150ms ease;
-	opacity: 0;
+.card {
+	position: relative;
+	cursor: pointer;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding: 24px;
+	padding-left: calc(24px * 2);
+	background: #ffffff;
+	border-radius: 16px;
+	/* Rounded corners */
+	box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+	transition: transform 0.3s ease, box-shadow 0.3s ease;
+	overflow: hidden;
+	border: 1px solid #e0e0e0;
+	/* Light border for subtle separation */
 }
 
-.root {
-	&:hover {
-		.controls {
-			opacity: 1;
-		}
+.card:hover {
+	transform: scale(1.03);
+	box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+	/* Enhanced shadow on hover */
+}
+
+.avatar {
+	border-radius: 50%;
+	border: 4px solid white;
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.name {
+	margin-top: 16px;
+	font-weight: 600;
+	font-size: 1.4rem;
+	/* Slightly larger font size */
+	color: #333;
+}
+
+.nik {
+	font-size: 1rem;
+	/* Increased font size for visibility */
+	color: #777;
+	/* Slightly darker color for contrast */
+}
+
+.info {
+	margin-top: 12px;
+	display: flex;
+	gap: 10px;
+	flex-wrap: wrap;
+	justify-content: center;
+}
+
+.info>* {
+	font-size: 0.9rem;
+}
+
+.oee-section {
+	margin-top: 20px;
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.oee-value {
+	font-size: 3rem;
+	/* Larger font size for OEE value */
+	font-weight: 700;
+	/* Bold font weight for emphasis */
+	color: #333;
+	margin-bottom: 8px;
+	/* Space between value and label */
+}
+
+.oee-label {
+	font-size: 1.2rem;
+	/* Larger font size for OEE label */
+	color: #6a1b9a;
+	/* Color for OEE label */
+}
+
+.card-header {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	justify-content: center;
+}
+
+@media (max-width: 768px) {
+	.card {
+		padding: 16px;
+	}
+
+	.name {
+		font-size: 1.2rem;
+		/* Adjust font size for smaller screens */
+	}
+
+	.nik {
+		font-size: 0.9rem;
+	}
+
+	.info>* {
+		font-size: 0.8rem;
+	}
+
+	.oee-value {
+		font-size: 2.5rem;
+		/* Adjusted font size for OEE on smaller screens */
+	}
+
+	.oee-label {
+		font-size: 1rem;
+		/* Adjusted font size for OEE label on smaller screens */
 	}
 }
