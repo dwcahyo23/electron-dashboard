@@ -1,6 +1,6 @@
 {
   "name": "electron-dashboard",
-  "version": "2.0.4",
+  "version": "2.0.5",
   "description": "An Electron application with React and TypeScript",
   "main": "./out/main/index.js",
   "author": "Yusuf Dwi",
@@ -20,7 +20,7 @@
     "build:win": "npm run build && electron-builder --win --config",
     "build:mac": "electron-vite build && electron-builder --mac",
     "build:linux": "electron-vite build && electron-builder --linux",
-    "release": "electron-builder --publish=onTag",
+    "release": "electron-builder --publish=always",
     "clean": "rimraf dist"
   },
   "dependencies": {
@@ -98,7 +98,9 @@
       "provider": "github",
       "owner": "dwcahyo23",
       "repo": "electron-dashboard",
-      "releaseType": "release"
+      "releaseType": "release",
+      "draft": false,
+      "prerelease": false
     }
   }
 }
