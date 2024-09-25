@@ -40,6 +40,7 @@
     "clsx": "^2.1.1",
     "dayjs": "^1.11.11",
     "electron-log": "^5.1.5",
+    "electron-store": "^9.0.0",
     "electron-updater": "^6.1.7",
     "embla-carousel-autoplay": "^7.1.0",
     "esbuild-plugin-react-virtualized": "^1.0.4",

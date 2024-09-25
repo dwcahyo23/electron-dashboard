@@ -5,6 +5,7 @@
     "src/renderer/src/debouce.d.ts",
     "src/renderer/src/**/*",
     "src/renderer/src/**/*.tsx",
+    "src/renderer/src/electron.d.ts", // Include your type declaration
     "src/preload/*.d.ts"
   ],
   "compilerOptions": {

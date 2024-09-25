@@ -4,6 +4,12 @@ import { autoUpdater } from 'electron-updater'
 import { join } from 'path'
 import icon from '../../resources/icon.png?asset'
 
+let Store: any // Declare a variable for Store
+
+async function createStore() {
+  Store = await import('electron-store') // Dynamically import electron-store
+}
+
 function createWindow(): void {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
@@ -90,8 +96,24 @@ const setupAutoUpdater = () => {
   autoUpdater.checkForUpdates()
 }
 
+// IPC to get the base URL
+ipcMain.handle('getBaseUrl', async () => {
+  const { default: Store } = await import('electron-store') // Destructure the default export
+  const store = new Store()
+  return store.get('axiosBaseUrl')
+})
+
+// IPC to set the base URL
+ipcMain.handle('setBaseUrl', async (_event, newUrl: string) => {
+  const { default: Store } = await import('electron-store') // Destructure the default export
+  const store = new Store()
+  store.set('axiosBaseUrl', newUrl)
+})
+
 // This method will be called when Electron has finished initialization.
-app.whenReady().then(() => {
+app.whenReady().then(async () => {
+  await createStore() // Ensure Store is initialized
+
   // Set app user model id for Windows
   electronApp.setAppUserModelId('com.electron')
 

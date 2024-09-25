@@ -9,46 +9,22 @@ import {
 } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import { IconMoon, IconSun } from '@tabler/icons-react'
-import clsx from 'clsx'
 import { Link, Outlet, RouterProvider, createBrowserRouter } from 'react-router-dom'
 import classes from '../src/styles/App.module.css'
 import Clock from './components/Clock'
-import Dashboard from './pages/Dashboard'
-import DownloadFile from './pages/DownloadFile'
+import Settings from './components/Setting'
 import Test from './pages/Test'
 import UploadApq from './pages/UploadApq'
-import UploadFile from './pages/UploadFile'
 
 const router = createBrowserRouter([
   {
     path: '/',
     element: <Layout />,
     children: [
-      {
-        path: 'dasboardPdDelay',
-        element: <Dashboard />
-      },
-      {
-        path: 'test',
-        element: <Test />
-      },
-      {
-        path: 'upload',
-        element: <UploadFile />
-      },
-      {
-        index: true,
-        path: 'uploadApq',
-        element: <UploadApq />
-      },
-      {
-        path: 'download',
-        element: <DownloadFile />
-      },
-      {
-        path: '*',
-        element: <N404 />
-      }
+      { path: 'settings', element: <Settings /> },
+      { path: 'test', element: <Test /> },
+      { index: true, path: 'uploadApq', element: <UploadApq /> },
+      { path: '*', element: <N404 /> }
     ]
   }
 ])
@@ -89,23 +65,15 @@ function Layout() {
           <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
           <Group justify="space-between" style={{ flex: 1 }}>
             <Group ml="md" gap={0} visibleFrom="sm">
-              {/* <UnstyledButton component={Link} to="/" className={classes.control}>
-                Dashboard
-              </UnstyledButton> */}
               <UnstyledButton component={Link} to="uploadApq" className={classes.control}>
                 Upload
               </UnstyledButton>
               <UnstyledButton component={Link} to="test" className={classes.control}>
                 Test
               </UnstyledButton>
-
-              {/* <UnstyledButton component={Link} to="upload" className={classes.control}>
-                Upload Delayed
-              </UnstyledButton> */}
-
-              {/* <UnstyledButton component={Link} to="download" className={classes.control}>
-                Download
-              </UnstyledButton> */}
+              <UnstyledButton component={Link} to="settings" className={classes.control}>
+                Settings
+              </UnstyledButton>
             </Group>
           </Group>
           <Group justify="flex-end" style={{ flex: 1 }}>
@@ -118,8 +86,11 @@ function Layout() {
                 size="xl"
                 aria-label="Toggle color scheme"
               >
-                <IconSun className={clsx[(classes.icon, classes.light)]} stroke={1.5} />
-                <IconMoon className={clsx[(classes.icon, classes.light)]} stroke={1.5} />
+                {computedColorScheme === 'light' ? (
+                  <IconSun className={classes.icon} stroke={1.5} />
+                ) : (
+                  <IconMoon className={classes.icon} stroke={1.5} />
+                )}
               </ActionIcon>
             </Group>
           </Group>
