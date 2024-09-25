@@ -98,9 +98,7 @@
       "provider": "github",
       "owner": "dwcahyo23",
       "repo": "electron-dashboard",
-      "releaseType": "release",
-      "draft": false,
-      "prerelease": false
+      "releaseType": "release"
     }
   }
 }
