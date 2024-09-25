@@ -25,6 +25,5 @@ jobs:
         run: npm run build
 
       - name: Release
-        run: npm run release
         env:
-          GH_TOKEN: ${{ secrets.GH_TOKEN }} # Use the secret token
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
