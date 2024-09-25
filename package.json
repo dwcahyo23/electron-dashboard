@@ -1,6 +1,6 @@
 {
   "name": "electron-dashboard",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "description": "An Electron application with React and TypeScript",
   "main": "./out/main/index.js",
   "author": "Yusuf Dwi",
@@ -96,8 +96,7 @@
       "provider": "github",
       "owner": "dwcahyo23",
       "repo": "electron-dashboard",
-      "releaseType": "release",
-      "token": "process.env.GITHUB_TOKEN"
+      "releaseType": "release"
     }
   }
 }
