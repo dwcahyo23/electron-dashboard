@@ -1,5 +1,5 @@
 export interface UserMnPrioInterface {
-  com: string;
-  nik: string;
-  prioId: string;
+  com: string
+  nik: string
+  prioId: string
 }

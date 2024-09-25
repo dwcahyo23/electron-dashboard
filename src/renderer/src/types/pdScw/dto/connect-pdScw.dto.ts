@@ -1,3 +1,3 @@
 export interface ConnectPdScwInterface {
-  id: string;
+  id: string
 }

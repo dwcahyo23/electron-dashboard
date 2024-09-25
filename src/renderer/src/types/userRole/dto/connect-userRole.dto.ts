@@ -1,3 +1,3 @@
 export interface ConnectUserRoleInterface {
-  id: number;
+  id: number
 }

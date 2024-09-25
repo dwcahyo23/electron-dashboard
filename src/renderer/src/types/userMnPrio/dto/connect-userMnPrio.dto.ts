@@ -1,9 +1,9 @@
 interface UserMnPrioUserMnPrioIdUniqueInputInterface {
-  com: string;
-  nik: string;
-  prioId: string;
+  com: string
+  nik: string
+  prioId: string
 }
 
 export interface ConnectUserMnPrioInterface {
-  userMnPrioId: UserMnPrioUserMnPrioIdUniqueInputInterface;
+  userMnPrioId: UserMnPrioUserMnPrioIdUniqueInputInterface
 }

@@ -1,3 +1,3 @@
 export interface ConnectLinkZMchInterface {
-  ZmId: number;
+  ZmId: number
 }

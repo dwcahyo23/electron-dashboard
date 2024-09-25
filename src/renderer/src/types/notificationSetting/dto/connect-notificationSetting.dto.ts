@@ -1,4 +1,4 @@
 export interface ConnectNotificationSettingInterface {
-  id?: number;
-  channelName?: string;
+  id?: number
+  channelName?: string
 }

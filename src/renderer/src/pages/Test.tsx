@@ -1,4 +1,4 @@
-import { Grid, Group, Loader, Paper, Select, Title } from '@mantine/core'
+import { Grid, Group, Loader, Select } from '@mantine/core'
 import CardList from '@renderer/components/CardList'
 import Chart from '@renderer/components/Chart'
 import UserCarouselVirtualized from '@renderer/components/UserCarouselVritualized'
@@ -17,27 +17,6 @@ import { EntityPdApqUserWeeklyWorstAndBestInterface } from '@renderer/types/pdAp
 import { useQuery } from '@tanstack/react-query'
 import axios from 'axios'
 import { useEffect, useState } from 'react'
-import { Bar, BarChart, CartesianGrid, Legend, Tooltip, XAxis, YAxis } from 'recharts'
-
-// Komponen untuk BarChart
-const PerformanceBarChart = ({ data }) => (
-  <BarChart width={600} height={300} data={data}>
-    <CartesianGrid strokeDasharray="3 3" />
-    <XAxis dataKey="name" />
-    <YAxis />
-    <Tooltip />
-    <Legend />
-    <Bar dataKey="performance" fill="#8884d8" />
-  </BarChart>
-)
-
-// Komponen Overview Dummy
-const OverviewCard = ({ title, content }) => (
-  <Paper shadow="xs" p="md">
-    <Title order={4}>{title}</Title>
-    <div>{content}</div>
-  </Paper>
-)
 
 // Komponen Test
 const Test = () => {

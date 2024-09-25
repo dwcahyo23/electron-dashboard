@@ -1,3 +1,3 @@
 export interface ConnectMnWoReportInterface {
-  woId: string;
+  woId: string
 }

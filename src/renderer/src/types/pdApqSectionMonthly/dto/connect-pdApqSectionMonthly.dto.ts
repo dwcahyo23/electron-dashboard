@@ -1,8 +1,8 @@
 interface PdApqSectionMonthlySectionNameUniqueInputInterface {
-  section: string;
-  name: string;
+  section: string
+  name: string
 }
 
 export interface ConnectPdApqSectionMonthlyInterface {
-  section_name: PdApqSectionMonthlySectionNameUniqueInputInterface;
+  section_name: PdApqSectionMonthlySectionNameUniqueInputInterface
 }

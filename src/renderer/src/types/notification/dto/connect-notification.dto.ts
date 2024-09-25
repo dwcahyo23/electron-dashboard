@@ -1,3 +1,3 @@
 export interface ConnectNotificationInterface {
-  id: number;
+  id: number
 }

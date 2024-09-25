@@ -1,4 +1,4 @@
 export interface CreateNotificationInterface {
-  whatsappNumber: string;
-  notificationMessage: string;
+  whatsappNumber: string
+  notificationMessage: string
 }

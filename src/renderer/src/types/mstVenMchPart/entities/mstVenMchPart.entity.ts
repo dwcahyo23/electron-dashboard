@@ -1,10 +1,10 @@
-import { EntityMstKindMchPartInterface } from "../../mstKindMchPart/entities/mstKindMchPart.entity";
-import { EntityMstCatMchPartInterface } from "../../mstCatMchPart/entities/mstCatMchPart.entity";
+import { EntityMstKindMchPartInterface } from '../../mstKindMchPart/entities/mstKindMchPart.entity'
+import { EntityMstCatMchPartInterface } from '../../mstCatMchPart/entities/mstCatMchPart.entity'
 
 export interface EntityMstVenMchPartInterface {
-  venId: string;
-  venNm: string;
-  mstKindMchPart?: EntityMstKindMchPartInterface[];
-  catNm: string;
-  mstCatMchPart?: EntityMstCatMchPartInterface;
+  venId: string
+  venNm: string
+  mstKindMchPart?: EntityMstKindMchPartInterface[]
+  catNm: string
+  mstCatMchPart?: EntityMstCatMchPartInterface
 }

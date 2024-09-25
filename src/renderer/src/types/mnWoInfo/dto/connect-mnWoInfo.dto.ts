@@ -1,3 +1,3 @@
 export interface ConnectMnWoInfoInterface {
-  id: string;
+  id: string
 }

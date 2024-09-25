@@ -1,4 +1,4 @@
 export interface UpdateNotificationInterface {
-  whatsappNumber?: string;
-  notificationMessage?: string;
+  whatsappNumber?: string
+  notificationMessage?: string
 }

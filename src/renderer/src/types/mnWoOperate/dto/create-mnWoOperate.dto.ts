@@ -1,21 +1,21 @@
-import { ConnectUserInterface } from "../../user/dto/connect-user.dto";
-import { ConnectMnWoReportInterface } from "../../mnWoReport/dto/connect-mnWoReport.dto";
-import { OperatePosition } from "../../enums";
+import { ConnectUserInterface } from '../../user/dto/connect-user.dto'
+import { ConnectMnWoReportInterface } from '../../mnWoReport/dto/connect-mnWoReport.dto'
+import { OperatePosition } from '../../enums'
 
 interface CreateMnWoOperateUserRelationInputInterface {
-  connect: ConnectUserInterface;
+  connect: ConnectUserInterface
 }
 interface CreateMnWoOperateMnWoReportRelationInputInterface {
-  connect: ConnectMnWoReportInterface;
+  connect: ConnectMnWoReportInterface
 }
 
 export interface CreateMnWoOperateInterface {
-  nik: string;
-  user: CreateMnWoOperateUserRelationInputInterface;
-  repId: string;
-  mnWoReport: CreateMnWoOperateMnWoReportRelationInputInterface;
-  opPos: OperatePosition;
-  opPoint: number;
-  createdBy?: string;
-  updatedBy?: string;
+  nik: string
+  user: CreateMnWoOperateUserRelationInputInterface
+  repId: string
+  mnWoReport: CreateMnWoOperateMnWoReportRelationInputInterface
+  opPos: OperatePosition
+  opPoint: number
+  createdBy?: string
+  updatedBy?: string
 }

@@ -161,7 +161,7 @@ const UserCarouselVirtualized = ({ users }: UserCarouselVirtualizedProps) => {
               <List
                 deferredMeasurementCache={cache}
                 rowHeight={cache.rowHeight}
-                rowRenderer={({ index, key, style, parent }) => (
+                rowRenderer={({ key, style }) => (
                   <animated.div key={key} style={{ ...style, overflow: 'hidden' }}>
                     <Group gap="md" justify="center">
                       {Array.from({ length: cardsPerRow }).map((_, cardIndex) => {

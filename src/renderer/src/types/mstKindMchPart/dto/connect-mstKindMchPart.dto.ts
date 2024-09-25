@@ -1,4 +1,4 @@
 export interface ConnectMstKindMchPartInterface {
-  kindId?: string;
-  kindNm?: string;
+  kindId?: string
+  kindNm?: string
 }

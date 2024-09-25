@@ -1,8 +1,8 @@
 interface MnWoPpWoIdBomUniqueInputInterface {
-  woId: string;
-  bom: string;
+  woId: string
+  bom: string
 }
 
 export interface ConnectMnWoPpInterface {
-  woId_bom: MnWoPpWoIdBomUniqueInputInterface;
+  woId_bom: MnWoPpWoIdBomUniqueInputInterface
 }

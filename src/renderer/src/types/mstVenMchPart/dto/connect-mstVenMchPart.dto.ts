@@ -1,4 +1,4 @@
 export interface ConnectMstVenMchPartInterface {
-  venId?: string;
-  venNm?: string;
+  venId?: string
+  venNm?: string
 }

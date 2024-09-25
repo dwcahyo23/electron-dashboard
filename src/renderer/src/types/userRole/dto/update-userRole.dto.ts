@@ -1,5 +1,5 @@
-import { Roles } from "../../enums";
+import { Roles } from '../../enums'
 
 export interface UpdateUserRoleInterface {
-  role?: Roles;
+  role?: Roles
 }

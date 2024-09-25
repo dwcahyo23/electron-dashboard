@@ -1,3 +1,3 @@
 export interface ConnectMstMtnLocInterface {
-  mtnLocId: string;
+  mtnLocId: string
 }

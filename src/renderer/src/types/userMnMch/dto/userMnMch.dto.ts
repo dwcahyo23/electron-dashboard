@@ -1,5 +1,5 @@
 export interface UserMnMchInterface {
-  com: string;
-  nik: string;
-  mtnLocId: string;
+  com: string
+  nik: string
+  mtnLocId: string
 }

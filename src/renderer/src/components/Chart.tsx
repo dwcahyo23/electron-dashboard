@@ -143,9 +143,6 @@ const Chart: React.FC<ChartProps> = React.memo(function Chart({
   lines = [],
   xAxisKey,
   chartTitle,
-  width = '100%',
-  // Set height to a fixed value
-  height = 600, // Remove from here and set fixed in ResponsiveContainer
   yAxes = [
     { yAxisId: 'left', orientation: 'left', stroke: '#0C1844' },
     { yAxisId: 'right', orientation: 'right', stroke: '#E4003A' }

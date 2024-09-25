@@ -1,4 +1,4 @@
 export interface ConnectMstZ20Interface {
-  zId?: number;
-  zCd?: string;
+  zId?: number
+  zCd?: string
 }

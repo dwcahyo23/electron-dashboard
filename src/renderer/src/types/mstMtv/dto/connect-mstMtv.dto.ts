@@ -1,4 +1,4 @@
 export interface ConnectMstMtvInterface {
-  mtId?: number;
-  mtCd?: string;
+  mtId?: number
+  mtCd?: string
 }

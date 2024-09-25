@@ -1,7 +1,7 @@
-import { OperatePosition } from "../../enums";
+import { OperatePosition } from '../../enums'
 
 export interface MnWoOperateInterface {
-  nik: string;
-  opPos: OperatePosition;
-  opPoint: number;
+  nik: string
+  opPos: OperatePosition
+  opPoint: number
 }

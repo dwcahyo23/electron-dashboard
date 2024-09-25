@@ -1,3 +1,3 @@
 export interface ConnectMstToolInterface {
-  id: string;
+  id: string
 }

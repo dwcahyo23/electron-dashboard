@@ -1,8 +1,8 @@
 interface PdApqUserMonthlyWorstAndBestNikSectionUniqueInputInterface {
-  nik: string;
-  section: string;
+  nik: string
+  section: string
 }
 
 export interface ConnectPdApqUserMonthlyWorstAndBestInterface {
-  nik_section: PdApqUserMonthlyWorstAndBestNikSectionUniqueInputInterface;
+  nik_section: PdApqUserMonthlyWorstAndBestNikSectionUniqueInputInterface
 }

@@ -1,21 +1,20 @@
-
-import { PartialDeep } from "type-fest";
-import { Status } from '../enums';
-import { MnWoInterface } from "../mnWo/dto/mnWo.dto";
+import { PartialDeep } from 'type-fest'
+import { Status } from '../enums'
+import { MnWoInterface } from '../mnWo/dto/mnWo.dto'
 
 /**
  * Interface untuk argumen metode createMnWo
  *
  * @property {PartialDeep<MnWoInterface>} - properti yang ada pada MnWoDto
  */
-export interface CreateMnWoArgument extends PartialDeep<MnWoInterface> { }
+export interface CreateMnWoArgument extends PartialDeep<MnWoInterface> {}
 
 /**
  * Interface untuk argumen metode updateMnWo
  *
  * @property {PartialDeep<MnWoInterface>} - properti yang ada pada MnWoDto
  */
-export interface UpdateMnWoArgument extends CreateMnWoArgument { }
+export interface UpdateMnWoArgument extends CreateMnWoArgument {}
 
 /**
  * Interface untuk argumen metode infoWo
@@ -26,10 +25,10 @@ export interface UpdateMnWoArgument extends CreateMnWoArgument { }
  * @property {string} [prio] - prioritas yang ingin diambil
  */
 export interface InfoWoArgument {
-	year: number;
-	month: number;
-	locNm?: string;
-	prio?: string;
+  year: number
+  month: number
+  locNm?: string
+  prio?: string
 }
 
 /**
@@ -46,15 +45,15 @@ export interface InfoWoArgument {
  * @property {string} [priority] - prioritas yang ingin diambil
  */
 export interface FindAllMnWoArgument {
-	page?: number;
-	perPage?: number;
-	filter?: string;
-	globalFilter?: string;
-	month?: number;
-	year?: number;
-	location?: string;
-	woClose?: Status;
-	priority?: string;
+  page?: number
+  perPage?: number
+  filter?: string
+  globalFilter?: string
+  month?: number
+  year?: number
+  location?: string
+  woClose?: Status
+  priority?: string
 }
 
 /**
@@ -63,7 +62,7 @@ export interface FindAllMnWoArgument {
  * @property {string} woId - id work order yang ingin diambil
  */
 export interface FindWoArgument {
-	woId: string;
+  woId: string
 }
 
 /**
@@ -76,11 +75,11 @@ export interface FindWoArgument {
  * @property {number} [perPage] - jumlah data per halaman yang ingin diambil
  */
 export interface FindAllMnWoByMcCdArgument {
-	mcCd: string;
-	comId: string;
-	woClose?: Status;
-	page?: number;
-	perPage?: number;
+  mcCd: string
+  comId: string
+  woClose?: Status
+  page?: number
+  perPage?: number
 }
 
 /**
@@ -90,8 +89,8 @@ export interface FindAllMnWoByMcCdArgument {
  * @property {string} comId - id company yang ingin diambil
  */
 export interface FindFailureArgument {
-	mcCd: string;
-	comId: string;
+  mcCd: string
+  comId: string
 }
 
 /**
@@ -101,7 +100,6 @@ export interface FindFailureArgument {
  * @property {string} comId - id company yang ingin diambil
  */
 export interface FindFailureHistorianArgument {
-	mcCd: string;
-	comId: string;
+  mcCd: string
+  comId: string
 }
-

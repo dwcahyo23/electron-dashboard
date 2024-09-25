@@ -1,4 +1,4 @@
 export interface MstComInterface {
-  comId: string;
-  comNm: string;
+  comId: string
+  comNm: string
 }

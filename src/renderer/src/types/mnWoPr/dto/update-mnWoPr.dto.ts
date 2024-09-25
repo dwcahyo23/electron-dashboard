@@ -1,4 +1,4 @@
 export interface UpdateMnWoPrInterface {
-  createdBy?: string;
-  updatedBy?: string;
+  createdBy?: string
+  updatedBy?: string
 }

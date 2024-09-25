@@ -1,5 +1,5 @@
 export interface UpdateMstMtnLocInterface {
-  mtnLocNm?: string;
-  createdBy?: string;
-  updatedBy?: string;
+  mtnLocNm?: string
+  createdBy?: string
+  updatedBy?: string
 }

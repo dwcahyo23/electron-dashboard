@@ -1,24 +1,24 @@
-import { ConnectMstComInterface } from "../../mstCom/dto/connect-mstCom.dto";
-import { ConnectUserInterface } from "../../user/dto/connect-user.dto";
-import { ConnectMstMtnLocInterface } from "../../mstMtnLoc/dto/connect-mstMtnLoc.dto";
+import { ConnectMstComInterface } from '../../mstCom/dto/connect-mstCom.dto'
+import { ConnectUserInterface } from '../../user/dto/connect-user.dto'
+import { ConnectMstMtnLocInterface } from '../../mstMtnLoc/dto/connect-mstMtnLoc.dto'
 
 interface UpdateUserMnMchMstComRelationInputInterface {
-  connect: ConnectMstComInterface;
+  connect: ConnectMstComInterface
 }
 interface UpdateUserMnMchUserRelationInputInterface {
-  connect: ConnectUserInterface;
+  connect: ConnectUserInterface
 }
 interface UpdateUserMnMchMtnLocRelationInputInterface {
-  connect: ConnectMstMtnLocInterface;
+  connect: ConnectMstMtnLocInterface
 }
 
 export interface UpdateUserMnMchInterface {
-  com?: string;
-  mstCom?: UpdateUserMnMchMstComRelationInputInterface;
-  nik?: string;
-  user?: UpdateUserMnMchUserRelationInputInterface;
-  mtnLocId?: string;
-  mtnLoc?: UpdateUserMnMchMtnLocRelationInputInterface;
-  createdBy?: string;
-  updatedBy?: string;
+  com?: string
+  mstCom?: UpdateUserMnMchMstComRelationInputInterface
+  nik?: string
+  user?: UpdateUserMnMchUserRelationInputInterface
+  mtnLocId?: string
+  mtnLoc?: UpdateUserMnMchMtnLocRelationInputInterface
+  createdBy?: string
+  updatedBy?: string
 }

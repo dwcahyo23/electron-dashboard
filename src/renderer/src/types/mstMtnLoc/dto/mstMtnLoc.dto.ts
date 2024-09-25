@@ -1,4 +1,4 @@
 export interface MstMtnLocInterface {
-  mtnLocId: string;
-  mtnLocNm: string;
+  mtnLocId: string
+  mtnLocNm: string
 }

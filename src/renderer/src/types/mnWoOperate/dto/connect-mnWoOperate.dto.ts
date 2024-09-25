@@ -1,8 +1,8 @@
 interface MnWoOperateNikRepIdUniqueInputInterface {
-  nik: string;
-  repId: string;
+  nik: string
+  repId: string
 }
 
 export interface ConnectMnWoOperateInterface {
-  nik_repId: MnWoOperateNikRepIdUniqueInputInterface;
+  nik_repId: MnWoOperateNikRepIdUniqueInputInterface
 }

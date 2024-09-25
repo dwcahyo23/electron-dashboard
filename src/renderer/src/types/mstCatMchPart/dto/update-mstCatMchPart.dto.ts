@@ -1,5 +1,5 @@
 export interface UpdateMstCatMchPartInterface {
-  catNm?: string;
-  createdBy?: string;
-  updatedBy?: string;
+  catNm?: string
+  createdBy?: string
+  updatedBy?: string
 }

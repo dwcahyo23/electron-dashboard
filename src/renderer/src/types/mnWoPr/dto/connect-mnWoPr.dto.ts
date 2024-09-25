@@ -1,3 +1,3 @@
 export interface ConnectMnWoPrInterface {
-  prId: string;
+  prId: string
 }

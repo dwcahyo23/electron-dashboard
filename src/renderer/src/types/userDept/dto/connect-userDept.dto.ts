@@ -1,8 +1,8 @@
 interface UserDeptUserDeptIdUniqueInputInterface {
-  deptId: number;
-  userId: string;
+  deptId: number
+  userId: string
 }
 
 export interface ConnectUserDeptInterface {
-  userDeptId: UserDeptUserDeptIdUniqueInputInterface;
+  userDeptId: UserDeptUserDeptIdUniqueInputInterface
 }

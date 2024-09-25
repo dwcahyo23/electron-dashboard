@@ -1,4 +1,4 @@
 export interface MstCatMchPartInterface {
-  catId: string;
-  catNm: string;
+  catId: string
+  catNm: string
 }

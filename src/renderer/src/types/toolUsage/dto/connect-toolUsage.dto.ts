@@ -1,3 +1,3 @@
 export interface ConnectToolUsageInterface {
-  id: string;
+  id: string
 }

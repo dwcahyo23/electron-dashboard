@@ -1,9 +1,9 @@
-import { EntityLinkZMchInterface } from "../../linkZMch/entities/linkZMch.entity";
+import { EntityLinkZMchInterface } from '../../linkZMch/entities/linkZMch.entity'
 
 export interface EntityMstMtvInterface {
-  mtId: number;
-  mtCd: string;
-  mtMac: string | null;
-  mtBle: string | null;
-  linkZmch?: EntityLinkZMchInterface[];
+  mtId: number
+  mtCd: string
+  mtMac: string | null
+  mtBle: string | null
+  linkZmch?: EntityLinkZMchInterface[]
 }

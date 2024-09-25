@@ -11,6 +11,8 @@
     "composite": true,
     "jsx": "react-jsx",
     "baseUrl": ".",
+    "noUnusedLocals": true,       // Reports errors for unused local variables
+    "noUnusedParameters": true,    // Reports errors for unused function parameters
     "paths": {
       "@renderer/*": [
         "src/renderer/src/*"

@@ -1,3 +1,3 @@
 export interface CreateNotificationSettingInterface {
-  channelName: string;
+  channelName: string
 }

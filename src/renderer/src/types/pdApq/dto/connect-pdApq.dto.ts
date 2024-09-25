@@ -1,8 +1,8 @@
 interface PdApqNikDateUniqueInputInterface {
-  nik: string;
-  date: Date;
+  nik: string
+  date: Date
 }
 
 export interface ConnectPdApqInterface {
-  nik_date: PdApqNikDateUniqueInputInterface;
+  nik_date: PdApqNikDateUniqueInputInterface
 }

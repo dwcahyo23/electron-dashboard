@@ -1,5 +1,5 @@
 export interface EntityNotificationSettingInterface {
-  id: number;
-  channelName: string;
-  isEnabled: boolean;
+  id: number
+  channelName: string
+  isEnabled: boolean
 }

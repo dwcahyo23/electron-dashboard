@@ -1,3 +1,3 @@
 export interface ConnectToolQuarantineInterface {
-  id: string;
+  id: string
 }

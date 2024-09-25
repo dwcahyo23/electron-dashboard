@@ -1,3 +1,3 @@
 export interface ConnectMstMtnPrioInterface {
-  prioId: string;
+  prioId: string
 }

@@ -1,5 +1,5 @@
 export interface CreateMnWoPrInterface {
-  prId: string;
-  createdBy?: string;
-  updatedBy?: string;
+  prId: string
+  createdBy?: string
+  updatedBy?: string
 }

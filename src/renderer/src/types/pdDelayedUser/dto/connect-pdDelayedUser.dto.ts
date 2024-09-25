@@ -1,3 +1,3 @@
 export interface ConnectPdDelayedUserInterface {
-  id: string;
+  id: string
 }

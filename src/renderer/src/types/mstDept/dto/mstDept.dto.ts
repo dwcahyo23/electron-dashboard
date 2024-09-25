@@ -1,4 +1,4 @@
 export interface MstDeptInterface {
-  deptId: number;
-  deptNm: string;
+  deptId: number
+  deptNm: string
 }

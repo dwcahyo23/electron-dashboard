@@ -40,17 +40,13 @@
     "electron-log": "^5.1.5",
     "electron-updater": "^6.1.7",
     "embla-carousel-autoplay": "^7.1.0",
-    "embla-carousel-react": "^7.1.0",
-    "esbuild": "^0.23.1",
-    "esbuild-plugin-react-virtualized": "^1.0.4",
     "react-qr-code": "^2.0.15",
     "react-router-dom": "^6.24.1",
     "react-spring": "^9.7.4",
     "react-virtualized": "^9.22.4",
-    "react-window": "^1.8.10",
     "recharts": "^2.12.7",
     "use-sound": "^4.0.3",
-    "xlsx": "^0.18.5"
+    "xlsx": "https://cdn.sheetjs.com/xlsx-0.20.3/xlsx-0.20.3.tgz"
   },
   "devDependencies": {
     "@electron-toolkit/eslint-config-prettier": "^2.0.0",
@@ -67,6 +63,7 @@
     "electron-vite": "^2.3.0",
     "eslint": "^8.57.0",
     "eslint-plugin-react": "^7.34.3",
+    "eslint-plugin-unused-imports": "^4.1.4",
     "postcss": "^8.4.39",
     "postcss-preset-mantine": "^1.15.0",
     "postcss-simple-vars": "^7.0.1",
@@ -75,6 +72,9 @@
     "react-dom": "^18.3.1",
     "typescript": "^5.5.2",
     "vite": "^5.3.1"
+  },
+  "resolutions": {
+    "react-virtualized": "git+https://git@github.com/remorses/react-virtualized-fixed-import.git#9.22.3"
   },
   "build": {
     "appId": "com.electron.app",
