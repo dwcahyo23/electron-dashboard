@@ -1,5 +1,6 @@
 import react from '@vitejs/plugin-react'
 import { defineConfig, externalizeDepsPlugin } from 'electron-vite'
+import fixReactVirtualized from 'esbuild-plugin-react-virtualized'
 import { resolve } from 'path'
 
 export default defineConfig({
@@ -15,6 +16,11 @@ export default defineConfig({
         '@renderer': resolve('src/renderer/src')
       }
     },
-    plugins: [react()]
+    plugins: [react()],
+    optimizeDeps: {
+      esbuildOptions: {
+        plugins: [fixReactVirtualized as import('vite/node_modules/esbuild/lib/main').Plugin]
+      }
+    }
   }
 })

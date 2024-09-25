@@ -1,5 +1,5 @@
 import { electronApp, is, optimizer } from '@electron-toolkit/utils'
-import { BrowserWindow, app, ipcMain, shell } from 'electron'
+import { BrowserWindow, app, dialog, ipcMain, shell } from 'electron'
 import { autoUpdater } from 'electron-updater'
 import { join } from 'path'
 import icon from '../../resources/icon.png?asset'
@@ -27,8 +27,7 @@ function createWindow(): void {
     return { action: 'deny' }
   })
 
-  // HMR for renderer base on electron-vite cli.
-  // Load the remote URL for development or the local html file for production.
+  // Load the remote URL for development or the local HTML file for production.
   if (is.dev && process.env['ELECTRON_RENDERER_URL']) {
     mainWindow.loadURL(process.env['ELECTRON_RENDERER_URL'])
   } else {
@@ -36,16 +35,68 @@ function createWindow(): void {
   }
 }
 
-// This method will be called when Electron has finished
-// initialization and is ready to create browser windows.
-// Some APIs can only be used after this event occurs.
+// Function to set up the auto updater with user interactions
+const setupAutoUpdater = () => {
+  autoUpdater.on('update-available', async () => {
+    const response = await dialog.showMessageBox({
+      type: 'info',
+      buttons: ['Update', 'Later'],
+      title: 'Update Available',
+      message: 'A new update is available. Would you like to update now?'
+    })
+
+    if (response.response === 0) {
+      autoUpdater.downloadUpdate() // Start downloading the update
+    }
+  })
+
+  autoUpdater.on('update-not-available', () => {
+    dialog.showMessageBox({
+      type: 'info',
+      title: 'No Update Available',
+      message: 'Your application is up to date.'
+    })
+  })
+
+  autoUpdater.on('error', (error) => {
+    dialog.showMessageBox({
+      type: 'error',
+      title: 'Update Error',
+      message: `Error in auto-updater: ${error.message}`
+    })
+  })
+
+  autoUpdater.on('download-progress', (progressObj) => {
+    const percent = Math.round(progressObj.percent)
+    console.log(`Download speed: ${progressObj.bytesPerSecond}`)
+    console.log(`Downloaded ${percent}%`)
+    console.log(`Downloaded ${progressObj.transferred} of ${progressObj.total} bytes`)
+  })
+
+  autoUpdater.on('update-downloaded', async () => {
+    const response = await dialog.showMessageBox({
+      type: 'info',
+      buttons: ['Restart', 'Later'],
+      title: 'Update Ready',
+      message: 'Update downloaded. Would you like to restart the application now?'
+    })
+
+    if (response.response === 0) {
+      autoUpdater.quitAndInstall() // Restart and install the update
+    }
+  })
+
+  // Start checking for updates
+  autoUpdater.checkForUpdates()
+}
+
+// This method will be called when Electron has finished initialization.
 app.whenReady().then(() => {
-  // Set app user model id for windows
+  // Set app user model id for Windows
   electronApp.setAppUserModelId('com.electron')
 
   // Default open or close DevTools by F12 in development
   // and ignore CommandOrControl + R in production.
-  // see https://github.com/alex8088/electron-toolkit/tree/master/packages/utils
   app.on('browser-window-created', (_, window) => {
     optimizer.watchWindowShortcuts(window)
   })
@@ -53,49 +104,20 @@ app.whenReady().then(() => {
   // IPC test
   ipcMain.on('ping', () => console.log('pong'))
 
-  // Auto updater events
-  autoUpdater.on('update-available', () => {
-    console.log('Update available. Downloading...')
-  })
+  // Setup auto updater
+  setupAutoUpdater()
 
-  autoUpdater.on('update-not-available', () => {
-    console.log('Update not available.')
-  })
-
-  autoUpdater.on('error', (error) => {
-    console.error('Error in auto-updater:', error)
-  })
-
-  autoUpdater.on('download-progress', (progressObj) => {
-    console.log(`Download speed: ${progressObj.bytesPerSecond}`)
-    console.log(`Downloaded ${progressObj.percent}%`)
-    console.log(`Downloaded ${progressObj.transferred} of ${progressObj.total} bytes`)
-  })
-
-  autoUpdater.on('update-downloaded', () => {
-    console.log('Update downloaded; will install now')
-    autoUpdater.quitAndInstall() // Install the update
-  })
-
+  // Create the main window
   createWindow()
 
-  autoUpdater.checkForUpdates()
-
-  app.on('activate', function () {
-    // On macOS it's common to re-create a window in the app when the
-    // dock icon is clicked and there are no other windows open.
+  app.on('activate', () => {
     if (BrowserWindow.getAllWindows().length === 0) createWindow()
   })
 })
 
-// Quit when all windows are closed, except on macOS. There, it's common
-// for applications and their menu bar to stay active until the user quits
-// explicitly with Cmd + Q.
+// Quit when all windows are closed, except on macOS.
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
     app.quit()
   }
 })
-
-// In this file you can include the rest of your app"s specific main process
-// code. You can also put them in separate files and require them here.
