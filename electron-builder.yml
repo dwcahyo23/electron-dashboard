@@ -43,6 +43,6 @@ publish:
   owner: dwcahyo23
   repo: electron-dashboard
   releaseType: release
-  token: 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 # Hapus ini jika repo publik
+  token: process.env.GITHUB_TOKEN # Hapus ini jika repo publik
 electronDownload:
   mirror: https://github.com/dwcahyo23/electron-dashboard/releases/download

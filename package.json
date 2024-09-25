@@ -15,11 +15,13 @@
     "dev": "electron-vite dev ",
     "build": "npm run typecheck && electron-vite build",
     "postinstall": "electron-builder install-app-deps",
+    "build:all": "npm run build:win && npm run build:mac && npm run build:linux",
     "build:unpack": "npm run build && electron-builder --dir",
     "build:win": "npm run build && electron-builder --win --config",
     "build:mac": "electron-vite build && electron-builder --mac",
     "build:linux": "electron-vite build && electron-builder --linux",
-    "release": "electron-builder --publish=onTag"
+    "release": "electron-builder --publish=onTag",
+    "clean": "rimraf dist"
   },
   "dependencies": {
     "@electron-toolkit/preload": "^3.0.1",
@@ -95,7 +97,7 @@
       "owner": "dwcahyo23",
       "repo": "electron-dashboard",
       "releaseType": "release",
-      "token": "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"
+      "token": "process.env.GITHUB_TOKEN"
     }
   }
 }
