@@ -3,7 +3,7 @@ name: Build and Release Electron App
 on:
   push:
     tags:
-      - v*.*.*  # Trigger workflow on version tags
+      - v*.*.* # Trigger workflow on version tags
 
 jobs:
   release:
@@ -11,19 +11,19 @@ jobs:
 
     strategy:
       matrix:
-        os: [ubuntu-latest, macos-latest, windows-latest]  # Specify multiple OS for builds
+        os: [ubuntu-latest, macos-latest, windows-latest] # Specify multiple OS for builds
 
     steps:
-       - name: Print Hello World
-        run: echo "Hello, World!"
-        
       - name: Checkout code
-        uses: actions/checkout@v3  # Use the latest version
+        uses: actions/checkout@v3
+
+      - name: Print Hello World
+        run: echo "Hello, World!"
 
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '16'  # Specify the Node.js version
+          node-version: '16' # Specify the Node.js version
 
       - name: Install dependencies
         run: npm install
@@ -34,4 +34,4 @@ jobs:
       - name: Release
         run: npm run release
         env:
-          GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}  # Ensure this secret is set correctly
+          GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }} # Ensure this secret is set correctly
