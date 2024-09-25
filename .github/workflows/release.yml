@@ -30,4 +30,4 @@ jobs:
       - name: Release
         run: npm run release
         env:
-          GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }} # Ensure this secret is set correctly
+          GH_TOKEN: ${{ secrets.GH_TOKEN }} # Use the secret token
