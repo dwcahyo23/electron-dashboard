@@ -249,7 +249,7 @@ const DashboardAPQ = () => {
   const bars = [
     {
       dataKey: 'avaibility',
-      name: 'Avaibility',
+      name: 'Availability',
       fill: '#2196f3',
       label: true,
       yAxisId: 'left'

@@ -132,7 +132,7 @@ export default function Login() {
           message: 'Login successful!',
           color: 'green'
         })
-        navigate('/')
+        navigate('/portal')
       } else {
         throw new Error('Login failed')
       }
@@ -184,7 +184,7 @@ export default function Login() {
         }}
       >
         <Stack gap="lg">
-          <Title ta="center">IOT PORTAL</Title>
+          <Title ta="center">LOGIN</Title>
           <Tabs defaultValue="login">
             <Tabs.List>
               <Tabs.Tab value="login">Login</Tabs.Tab>

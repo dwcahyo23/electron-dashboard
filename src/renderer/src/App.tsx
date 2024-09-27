@@ -9,25 +9,41 @@ import {
 } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import { IconLogout, IconMoon, IconSun } from '@tabler/icons-react'
-import axios from 'axios'
 import { useEffect, useState } from 'react'
-import { Link, Outlet, RouterProvider, createBrowserRouter, useNavigate } from 'react-router-dom'
+import {
+  Link,
+  Navigate,
+  Outlet,
+  RouterProvider,
+  createBrowserRouter,
+  useNavigate
+} from 'react-router-dom'
 import Clock from './components/Clock'
 import DashboardAPQ from './pages/DashboardAPQ'
 import Login from './pages/Login'
-import UploadApq from './pages/UploadApq'
+import PortalPage from './pages/PortalPage'
+import UploadAPQ from './pages/UploadAPQ'
 
 const router = createBrowserRouter([
   {
     path: '/',
+    element: <Navigate to="/Login" /> // Mengarahkan root ke login
+  },
+  {
+    path: '/portal',
+    element: <PortalPage /> // Halaman Portal
+  },
+  {
+    path: '/app-apq',
     element: <Layout />,
     children: [
+      { path: '', element: <Navigate to="DashboardAPQ" /> }, // Mengarahkan ke DashboardAPQ sebagai default
       { path: 'DashboardAPQ', element: <DashboardAPQ /> },
-      { path: 'uploadApq', element: <UploadApq /> },
-      { path: '*', element: <N404 /> }
+      { path: 'uploadApq', element: <UploadAPQ /> }
     ]
   },
-  { path: 'Login', element: <Login /> }
+  { path: '/Login', element: <Login /> },
+  { path: '*', element: <N404 /> }
 ])
 
 function N404() {
@@ -35,7 +51,7 @@ function N404() {
     <div>
       <h2>Nothing to see here!</h2>
       <p>
-        <Link to="/">Go to the home page</Link>
+        <Link to="/portal">Go to the portal</Link>
       </p>
     </div>
   )
@@ -45,7 +61,6 @@ export default function App() {
   return (
     <div>
       <RouterProvider router={router} />
-      {/* <UpdateElectron /> */}
     </div>
   )
 }
@@ -56,7 +71,6 @@ function Layout() {
   const [userData, setUserData] = useState<any>()
   useMantineColorScheme()
   const { colorScheme, toggleColorScheme } = useMantineColorScheme()
-  // const computedColorScheme = useComputedColorScheme('light', { getInitialValueInEffect: true })
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -74,11 +88,7 @@ function Layout() {
   }, [])
 
   const handleLogout = async () => {
-    await window.api.removeAccessToken()
-    delete axios.defaults.headers.common['Authorization']
-    await window.api.setLoginStatus(false)
-    await window.api.removeUserData()
-    navigate('/Login')
+    navigate('/portal') // Redirect to PortalPage instead of Login
   }
 
   return (

@@ -68,7 +68,7 @@ const convertExcelApqToCreatePdApq = (data: ExcelApq[]): CreatePdApqInterface[] 
  * Renders a dropzone component that accepts Excel files and posts the
  * converted data to the server upon successful upload.
  */
-function UploadApq(): JSX.Element {
+function UploadAPQ(): JSX.Element {
   const { mutate, isPending, isError, isSuccess, error, cancel } = usePostData<
     CreatePdApqInterface[],
     CreatePdApqInterface[]
@@ -205,4 +205,4 @@ function UploadApq(): JSX.Element {
   )
 }
 
-export default UploadApq
+export default UploadAPQ
