@@ -1,5 +1,6 @@
 {
   "name": "iot-app",
+  "producName": "IOT Application",
   "version": "2.1.2",
   "description": "An Electron application with React and TypeScript",
   "main": "./out/main/index.js",
@@ -88,7 +89,7 @@
   },
   "build": {
     "appId": "com.electron.app",
-    "productName": "electron-dashboard",
+    "productName": "IoT Application",
     "directories": {
       "buildResources": "build"
     },

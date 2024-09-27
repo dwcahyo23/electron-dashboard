@@ -1,5 +1,5 @@
 appId: com.electron.app
-productName: electron-dashboard
+productName: Iot Application
 directories:
   buildResources: build
 files:
@@ -12,7 +12,7 @@ files:
 asarUnpack:
   - resources/**
 win:
-  executableName: electron-dashboard
+  executableName: iot-app
 nsis:
   artifactName: '${name}-${version}-setup.${ext}'
   shortcutName: '${productName}'

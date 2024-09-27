@@ -5,7 +5,7 @@ import { autoUpdater } from 'electron-updater'
 import { join } from 'path'
 import icon from '../../resources/icon.png?asset'
 
-let progressBar: ProgressBar
+let progressBar: ProgressBar | null = null // Initialize progressBar as null
 
 async function createStore() {
   await import('electron-store')
