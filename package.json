@@ -1,5 +1,5 @@
 {
-  "name": "electron-dashboard",
+  "name": "IOT APP",
   "version": "2.1.1",
   "description": "An Electron application with React and TypeScript",
   "main": "./out/main/index.js",
