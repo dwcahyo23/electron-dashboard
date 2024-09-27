@@ -35,7 +35,7 @@ function DownloadFile(): JSX.Element {
     queryFn: async () =>
       await axios<DelayApiResponse>({
         method: 'GET',
-        url: '/api/v1/pd/delayed/today'
+        url: '/pd/delayed/today'
       }).then((response) => response.data)
   })
 

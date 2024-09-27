@@ -1,3 +1,27 @@
+/* App.module.css */
+.appBackground {
+	height: 100vh;
+	/* Ensure it covers the full viewport height */
+	background: linear-gradient(to right, #6a11cb, #2575fc);
+	/* Customize your gradient colors */
+	display: flex;
+	flex-direction: column;
+}
+
+.header {
+	background-color: rgba(255, 255, 255, 0.8);
+	/* Semi-transparent background for the header */
+}
+
+.main {
+	flex: 1;
+	/* Allow main to take up the remaining space */
+	padding: 20px;
+	/* Add padding for better spacing */
+	overflow-y: auto;
+	/* Allow scrolling if content overflows */
+}
+
 .control {
 	display: block;
 	padding: var(--mantine-spacing-xs) var(--mantine-spacing-md);

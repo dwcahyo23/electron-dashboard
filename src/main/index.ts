@@ -20,7 +20,9 @@ function createWindow(): void {
     ...(process.platform === 'linux' ? { icon } : {}),
     webPreferences: {
       preload: join(__dirname, '../preload/index.js'),
-      sandbox: false
+      sandbox: false,
+      contextIsolation: true,
+      nodeIntegration: false
     }
   })
 
@@ -39,6 +41,12 @@ function createWindow(): void {
   } else {
     mainWindow.loadFile(join(__dirname, '../renderer/index.html'))
   }
+
+  // Send the version to the renderer process
+  const appVersion = app.getVersion()
+  mainWindow.webContents.on('did-finish-load', () => {
+    mainWindow.webContents.send('version', appVersion)
+  })
 }
 
 // Function to set up the auto updater with user interactions
@@ -108,6 +116,62 @@ ipcMain.handle('setBaseUrl', async (_event, newUrl: string) => {
   const { default: Store } = await import('electron-store') // Destructure the default export
   const store = new Store()
   store.set('axiosBaseUrl', newUrl)
+})
+
+// IPC to get the access token
+ipcMain.handle('getAccessToken', async () => {
+  const { default: Store } = await import('electron-store')
+  const store = new Store()
+  return store.get('accessToken') || null
+})
+
+// IPC to set the access token
+ipcMain.handle('setAccessToken', async (_event, token: string) => {
+  const { default: Store } = await import('electron-store')
+  const store = new Store()
+  store.set('accessToken', token)
+})
+
+// IPC to remove the access token
+ipcMain.handle('removeAccessToken', async () => {
+  const { default: Store } = await import('electron-store')
+  const store = new Store()
+  store.delete('accessToken')
+})
+
+// IPC to get the access token
+ipcMain.handle('getUserData', async () => {
+  const { default: Store } = await import('electron-store')
+  const store = new Store()
+  return store.get('userData') || null
+})
+
+// IPC to set user data (uid, displayName)
+ipcMain.handle('setUserData', async (_event, userData: { uid?: string; displayName?: string }) => {
+  const { default: Store } = await import('electron-store')
+  const store = new Store()
+  store.set('userData', userData)
+})
+
+// IPC to remove user data
+ipcMain.handle('removeUserData', async () => {
+  const { default: Store } = await import('electron-store')
+  const store = new Store()
+  store.delete('userData')
+})
+
+// IPC to get the login status
+ipcMain.handle('getLoginStatus', async () => {
+  const { default: Store } = await import('electron-store')
+  const store = new Store()
+  return store.get('isLoggedIn') || false // Return false if not set
+})
+
+// IPC to set the login status
+ipcMain.handle('setLoginStatus', async (_event, status: boolean) => {
+  const { default: Store } = await import('electron-store')
+  const store = new Store()
+  store.set('isLoggedIn', status)
 })
 
 // This method will be called when Electron has finished initialization.

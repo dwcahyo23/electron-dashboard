@@ -14,8 +14,7 @@ function UploadFile() {
 
   const mutation = useMutation({
     mutationKey: ['postExcel'],
-    mutationFn: (data: FileExcel[]) =>
-      axios({ method: 'POST', url: '/api/v1/pd/delayed', data: data })
+    mutationFn: (data: FileExcel[]) => axios({ method: 'POST', url: '/pd/delayed', data: data })
   })
 
   //   console.log(mutation.isError, mutation.error)

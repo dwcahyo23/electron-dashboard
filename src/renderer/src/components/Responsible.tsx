@@ -20,7 +20,7 @@ function Responsible() {
     queryFn: async () =>
       await axios({
         method: 'GET',
-        url: '/api/v1/pd/delayed/info/user',
+        url: '/pd/delayed/info/user',
         params: {
           year: apiArg.year,
           month: apiArg.month

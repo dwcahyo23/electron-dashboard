@@ -2,7 +2,14 @@
 <html>
   <head>
     <meta charset="UTF-8" />
-    <title>Dashboard by Yusuf</title>
+    <title>IOT APP</title>
+    <script>
+      // Access `api` and update the document title with the version
+      window.api.onVersion((version) => {
+          document.title = `IOT APP - build version ${version}`;
+      });
+  </script>
+   
     <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
     <!-- <meta
       http-equiv="Content-Security-Policy"

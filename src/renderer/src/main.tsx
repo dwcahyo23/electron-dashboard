@@ -4,9 +4,10 @@
 // axios.defaults.baseURL = 'http://localhost:5001/'
 // axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*'
 // axios.defaults.headers.common['Content-Type'] = 'application/json'
-
 import { MantineProvider } from '@mantine/core'
 import '@mantine/core/styles.css'
+import { Notifications } from '@mantine/notifications'
+import '@mantine/notifications/styles.css'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import axios from 'axios'
 import React, { useEffect } from 'react'
@@ -30,6 +31,7 @@ const Main = () => {
   return (
     <QueryClientProvider client={queryClient}>
       <MantineProvider withGlobalClasses withStaticClasses>
+        <Notifications />
         <App />
       </MantineProvider>
     </QueryClientProvider>

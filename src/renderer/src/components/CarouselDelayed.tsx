@@ -20,7 +20,7 @@ function CarouselDelayed() {
     queryFn: async () =>
       await axios({
         method: 'GET',
-        url: '/api/v1/pd/delayed/today'
+        url: '/pd/delayed/today'
       }).then((response) => response.data),
     refetchInterval: intervalMs
   })

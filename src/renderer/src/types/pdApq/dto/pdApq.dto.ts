@@ -1,11 +1,14 @@
 export interface PdApqInterface {
-  date: Date
-  section: string
-  avaibility: number
-  performance: number
-  quality: number
-  createdBy: string
-  updatedBy: string
-  createdAt: Date
-  updatedAt: Date
+  nik: string;
+  date: Date;
+  comId: string;
+  section: string;
+  avaibility: number;
+  performance: number;
+  quality: number;
+  sectionHead: string;
+  createdBy: string;
+  updatedBy: string;
+  createdAt: Date;
+  updatedAt: Date;
 }

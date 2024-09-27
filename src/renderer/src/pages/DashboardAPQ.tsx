@@ -1,6 +1,7 @@
-import { Grid, Group, Loader, Select } from '@mantine/core'
+import { Grid, Group, Select } from '@mantine/core'
 import CardList from '@renderer/components/CardList'
 import Chart from '@renderer/components/Chart'
+import Loading from '@renderer/components/Loading'
 import UserCarouselVirtualized from '@renderer/components/UserCarouselVritualized'
 import { BaseResponse } from '@renderer/types/base/response.type'
 import { EntityPdApqLeaderDailyProgresInterface } from '@renderer/types/pdApqLeaderDailyProgres/entities/pdApqLeaderDailyProgres.entity'
@@ -18,8 +19,8 @@ import { useQuery } from '@tanstack/react-query'
 import axios from 'axios'
 import { useEffect, useState } from 'react'
 
-// Komponen Test
-const Test = () => {
+// Komponen DashboardAPQ
+const DashboardAPQ = () => {
   const [timeRange, setTimeRange] = useState('monthly') // Default to 'monthly'
   const [section, setSection] = useState<'Machining' | 'Forming' | 'Heat Treatment' | 'All'>('All') // Default to 'all'
 
@@ -34,9 +35,9 @@ const Test = () => {
   > => {
     try {
       const urlMap = {
-        daily: '/api/v1/pdapq/user/daily',
-        weekly: '/api/v1/pdapq/user/weekly',
-        monthly: '/api/v1/pdapq/user/monthly'
+        daily: '/pdapq/user/daily',
+        weekly: '/pdapq/user/weekly',
+        monthly: '/pdapq/user/monthly'
       }
 
       let url = urlMap[timeRange]
@@ -79,9 +80,9 @@ const Test = () => {
   > => {
     try {
       const urlMap = {
-        daily: '/api/v1/pdapq/user/daily/worst-and-best',
-        weekly: '/api/v1/pdapq/user/weekly/worst-and-best',
-        monthly: '/api/v1/pdapq/user/monthly/worst-and-best'
+        daily: '/pdapq/user/daily/worst-and-best',
+        weekly: '/pdapq/user/weekly/worst-and-best',
+        monthly: '/pdapq/user/monthly/worst-and-best'
       }
 
       let url = urlMap[timeRange]
@@ -124,9 +125,9 @@ const Test = () => {
   > => {
     try {
       const urlMap = {
-        daily: '/api/v1/pdapq/leader/daily',
-        weekly: '/api/v1/pdapq/leader/weekly',
-        monthly: '/api/v1/pdapq/leader/monthly'
+        daily: '/pdapq/leader/daily',
+        weekly: '/pdapq/leader/weekly',
+        monthly: '/pdapq/leader/monthly'
       }
 
       let url = urlMap[timeRange]
@@ -164,8 +165,8 @@ const Test = () => {
   ): Promise<EntityPdApqSectionMonthlyInterface[] | EntityPdApqSectionWeeklyInterface[]> => {
     try {
       const urlMap = {
-        weekly: '/api/v1/pdapq/section/weekly',
-        monthly: '/api/v1/pdapq/section/monthly'
+        weekly: '/pdapq/section/weekly',
+        monthly: '/pdapq/section/monthly'
       }
 
       let url = timeRange !== 'daily' ? urlMap[timeRange] : urlMap.monthly
@@ -303,7 +304,7 @@ const Test = () => {
   }, [section, timeRange])
 
   if (isLoadingUsers || isLoadingWorstAndBest || isLoadingLeader || isLoadingChartData) {
-    return <Loader />
+    return <Loading />
   }
 
   return (
@@ -355,4 +356,4 @@ const Test = () => {
   )
 }
 
-export default Test
+export default DashboardAPQ

@@ -4,7 +4,16 @@ import { contextBridge, ipcRenderer } from 'electron'
 // Custom APIs for renderer
 const api = {
   getBaseUrl: () => ipcRenderer.invoke('getBaseUrl'),
-  setBaseUrl: (url: string) => ipcRenderer.invoke('setBaseUrl', url)
+  setBaseUrl: (url: string) => ipcRenderer.invoke('setBaseUrl', url),
+  onVersion: (callback) => ipcRenderer.on('version', (_event, version) => callback(version)),
+  getAccessToken: () => ipcRenderer.invoke('getAccessToken'),
+  setAccessToken: (token) => ipcRenderer.invoke('setAccessToken', token),
+  removeAccessToken: () => ipcRenderer.invoke('removeAccessToken'),
+  setUserData: (data) => ipcRenderer.invoke('setUserData', data),
+  getUserData: (data) => ipcRenderer.invoke('getUserData', data),
+  removeUserData: () => ipcRenderer.invoke('removeUserData'),
+  getLoginStatus: () => ipcRenderer.invoke('getLoginStatus'),
+  setLoginStatus: (status) => ipcRenderer.invoke('setLoginStatus', status)
 }
 
 // Use `contextBridge` APIs to expose Electron APIs to

@@ -34,7 +34,7 @@ function Barchart() {
     queryFn: async () =>
       await axios({
         method: 'GET',
-        url: '/api/v1/pd/delayed/info/cust'
+        url: '/pd/delayed/info/cust'
       }).then((response) => response.data),
     refetchInterval: intervalMs
   })
