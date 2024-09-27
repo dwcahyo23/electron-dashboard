@@ -4,11 +4,10 @@ import { autoUpdater } from 'electron-updater'
 import { join } from 'path'
 import icon from '../../resources/icon.png?asset'
 
-/* eslint-disable-next-line @typescript-eslint/no-unused-vars */
-let Store: any // Declare a variable for Store
+let store: typeof import('electron-store') | undefined
 
 async function createStore() {
-  Store = await import('electron-store') // Dynamically import electron-store
+  store = await import('electron-store') // Dynamically import electron-store
 }
 
 function createWindow(): void {
