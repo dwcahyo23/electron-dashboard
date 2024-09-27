@@ -22,7 +22,7 @@ import Clock from './components/Clock'
 import DashboardAPQ from './pages/DashboardAPQ'
 import Login from './pages/Login'
 import PortalPage from './pages/PortalPage'
-import UploadAPQ from './pages/UploadAPQ'
+import UploadApq from './pages/UploadApq'
 
 const router = createBrowserRouter([
   {
@@ -39,7 +39,7 @@ const router = createBrowserRouter([
     children: [
       { path: '', element: <Navigate to="DashboardAPQ" /> }, // Mengarahkan ke DashboardAPQ sebagai default
       { path: 'DashboardAPQ', element: <DashboardAPQ /> },
-      { path: 'UploadAPQ', element: <UploadAPQ /> }
+      { path: 'UploadAPQ', element: <UploadApq /> }
     ]
   },
   { path: '/Login', element: <Login /> },
