@@ -4,6 +4,7 @@ import { autoUpdater } from 'electron-updater'
 import { join } from 'path'
 import icon from '../../resources/icon.png?asset'
 
+/* eslint-disable-next-line @typescript-eslint/no-unused-vars */
 let Store: any // Declare a variable for Store
 
 async function createStore() {
