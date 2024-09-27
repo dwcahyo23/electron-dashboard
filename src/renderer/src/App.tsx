@@ -39,7 +39,7 @@ const router = createBrowserRouter([
     children: [
       { path: '', element: <Navigate to="DashboardAPQ" /> }, // Mengarahkan ke DashboardAPQ sebagai default
       { path: 'DashboardAPQ', element: <DashboardAPQ /> },
-      { path: 'uploadApq', element: <UploadAPQ /> }
+      { path: 'UploadAPQ', element: <UploadAPQ /> }
     ]
   },
   { path: '/Login', element: <Login /> },
@@ -102,7 +102,7 @@ function Layout() {
           <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
           <Group justify="space-between" style={{ flex: 1 }}>
             <Group ml="md" gap="xs" visibleFrom="sm">
-              <UnstyledButton component={Link} to="uploadApq">
+              <UnstyledButton component={Link} to="UploadAPQ">
                 Upload
               </UnstyledButton>
               <UnstyledButton component={Link} to="DashboardAPQ">
