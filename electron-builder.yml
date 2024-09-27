@@ -1,5 +1,5 @@
 appId: com.electron.app
-productName: Iot Application
+productName: IOT APP
 directories:
   buildResources: build
 files:
