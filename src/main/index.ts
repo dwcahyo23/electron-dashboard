@@ -1,8 +1,11 @@
 import { electronApp, is, optimizer } from '@electron-toolkit/utils'
 import { BrowserWindow, app, dialog, ipcMain, shell } from 'electron'
+import { ProgressBar } from 'electron-progressbar'
 import { autoUpdater } from 'electron-updater'
 import { join } from 'path'
 import icon from '../../resources/icon.png?asset'
+
+let progressBar: ProgressBar
 
 async function createStore() {
   await import('electron-store')
@@ -58,8 +61,24 @@ const setupAutoUpdater = () => {
     })
 
     if (response.response === 0) {
+      // Initialize the progress bar when starting the download
+      const progressBar = new ProgressBar({
+        title: 'Downloading Update...',
+        text: 'Downloading...',
+        detail: 'Please wait.',
+        indeterminate: false,
+        closeOnComplete: true // Close when complete
+      })
+
+      progressBar.show() // Show the progress bar
+
       autoUpdater.downloadUpdate() // Start downloading the update
     }
+  })
+
+  autoUpdater.on('download-progress', (progressObj) => {
+    const percent = Math.round(progressObj.percent)
+    progressBar.setValue(percent) // Set the determinate progress bar
   })
 
   autoUpdater.on('update-not-available', () => {
