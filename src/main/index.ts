@@ -4,10 +4,8 @@ import { autoUpdater } from 'electron-updater'
 import { join } from 'path'
 import icon from '../../resources/icon.png?asset'
 
-let store: typeof import('electron-store') | undefined
-
 async function createStore() {
-  store = await import('electron-store') // Dynamically import electron-store
+  await import('electron-store')
 }
 
 function createWindow(): void {
