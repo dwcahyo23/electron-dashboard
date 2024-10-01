@@ -1,7 +1,7 @@
 // src/pages/PortalPage.tsx
 
 import { Button, Card, Flex, Grid, Image, Text, Title } from '@mantine/core'
-import axios from 'axios' // Ensure axios is imported
+import axios from 'axios'; // Ensure axios is imported
 import { Link, useNavigate } from 'react-router-dom'
 import backgroundImageUrl from '../assets/iot-background.jpg'
 
@@ -102,7 +102,7 @@ const PortalPage = () => {
           <Grid.Col span={{ base: 12, sm: 6 }}>
             <Card
               component={Link}
-              to="/app-other" // Ganti dengan route aplikasi lain jika ada
+              to="/app-mn-wo" // Ganti dengan route aplikasi lain jika ada
               padding="lg"
               shadow="sm"
               style={{
@@ -123,7 +123,7 @@ const PortalPage = () => {
               onMouseLeave={(e) => (e.currentTarget.style.transform = 'scale(1)')}
             >
               <Text size="lg" fw={500}>
-                Aplikasi Lain
+                MN-WO
               </Text>
               <Text color="dimmed">Akses aplikasi lainnya</Text>
             </Card>

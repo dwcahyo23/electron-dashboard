@@ -20,6 +20,7 @@ import {
 } from 'react-router-dom'
 import Clock from './components/Clock'
 import DashboardAPQ from './pages/DashboardAPQ'
+import MnWoForm from './pages/FormWo'
 import Login from './pages/Login'
 import PortalPage from './pages/PortalPage'
 import UploadApq from './pages/UploadApq'
@@ -42,20 +43,13 @@ const router = createBrowserRouter([
       { path: 'UploadAPQ', element: <UploadApq /> }
     ]
   },
+  {
+    path: '/app-mn-wo',
+    element: <MnWoForm />
+  },
   { path: '/Login', element: <Login /> },
-  { path: '*', element: <N404 /> }
+  { path: '*', element: <Login /> }
 ])
-
-function N404() {
-  return (
-    <div>
-      <h2>Nothing to see here!</h2>
-      <p>
-        <Link to="/portal">Go to the portal</Link>
-      </p>
-    </div>
-  )
-}
 
 export default function App() {
   return (
@@ -107,6 +101,9 @@ function Layout() {
               </UnstyledButton>
               <UnstyledButton component={Link} to="DashboardAPQ">
                 DashboardAPQ
+              </UnstyledButton>
+              <UnstyledButton component={Link} to="DashboardAPQ">
+                FORM
               </UnstyledButton>
             </Group>
           </Group>
