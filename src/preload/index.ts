@@ -5,15 +5,16 @@ import { contextBridge, ipcRenderer } from 'electron'
 const api = {
   getBaseUrl: () => ipcRenderer.invoke('getBaseUrl'),
   setBaseUrl: (url: string) => ipcRenderer.invoke('setBaseUrl', url),
-  onVersion: (callback) => ipcRenderer.on('version', (_event, version) => callback(version)),
+  onVersion: (callback: (arg0: any) => void) =>
+    ipcRenderer.on('version', (_event, version) => callback(version)),
   getAccessToken: () => ipcRenderer.invoke('getAccessToken'),
-  setAccessToken: (token) => ipcRenderer.invoke('setAccessToken', token),
+  setAccessToken: (token: any) => ipcRenderer.invoke('setAccessToken', token),
   removeAccessToken: () => ipcRenderer.invoke('removeAccessToken'),
-  setUserData: (data) => ipcRenderer.invoke('setUserData', data),
-  getUserData: (data) => ipcRenderer.invoke('getUserData', data),
+  setUserData: (data: any) => ipcRenderer.invoke('setUserData', data),
+  getUserData: (data: any) => ipcRenderer.invoke('getUserData', data),
   removeUserData: () => ipcRenderer.invoke('removeUserData'),
   getLoginStatus: () => ipcRenderer.invoke('getLoginStatus'),
-  setLoginStatus: (status) => ipcRenderer.invoke('setLoginStatus', status)
+  setLoginStatus: (status: any) => ipcRenderer.invoke('setLoginStatus', status)
 }
 
 // Use `contextBridge` APIs to expose Electron APIs to

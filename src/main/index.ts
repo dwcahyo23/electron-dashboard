@@ -1,24 +1,18 @@
 import { electronApp, is, optimizer } from '@electron-toolkit/utils'
 import { BrowserWindow, app, dialog, ipcMain, shell } from 'electron'
-import { ProgressBar } from 'electron-progressbar'
+import ProgressBar from 'electron-progressbar'
 import { autoUpdater } from 'electron-updater'
 import { join } from 'path'
 import icon from '../../resources/icon.png?asset'
 
-let progressBar: ProgressBar | null = null // Initialize progressBar as null
-
-async function createStore() {
-  await import('electron-store')
-}
-
-function createWindow(): void {
-  // Create the browser window.
+// Function to create the main window
+function createMainWindow(): void {
   const mainWindow = new BrowserWindow({
     width: 900,
     height: 670,
     show: false,
     autoHideMenuBar: true,
-    ...(process.platform === 'linux' ? { icon } : {}),
+    icon: process.platform === 'linux' ? icon : undefined,
     webPreferences: {
       preload: join(__dirname, '../preload/index.js'),
       sandbox: false,
@@ -36,22 +30,24 @@ function createWindow(): void {
     return { action: 'deny' }
   })
 
-  // Load the remote URL for development or the local HTML file for production.
-  if (is.dev && process.env['ELECTRON_RENDERER_URL']) {
-    mainWindow.loadURL(process.env['ELECTRON_RENDERER_URL'])
-  } else {
-    mainWindow.loadFile(join(__dirname, '../renderer/index.html'))
-  }
+  const loadURL =
+    is.dev && process.env['ELECTRON_RENDERER_URL']
+      ? process.env['ELECTRON_RENDERER_URL']
+      : join(__dirname, '../renderer/index.html')
 
-  // Send the version to the renderer process
+  mainWindow.loadURL(is.dev ? process.env['ELECTRON_RENDERER_URL']! : loadURL)
+
+  // Send app version to renderer
   const appVersion = app.getVersion()
   mainWindow.webContents.on('did-finish-load', () => {
     mainWindow.webContents.send('version', appVersion)
   })
 }
 
-// Function to set up the auto updater with user interactions
-const setupAutoUpdater = () => {
+// Function to set up the auto-updater
+function setupAutoUpdater() {
+  let progressBar: ProgressBar | null = null
+
   autoUpdater.on('update-available', async () => {
     const response = await dialog.showMessageBox({
       type: 'info',
@@ -61,24 +57,46 @@ const setupAutoUpdater = () => {
     })
 
     if (response.response === 0) {
-      // Initialize the progress bar when starting the download
-      const progressBar = new ProgressBar({
-        title: 'Downloading Update...',
-        text: 'Downloading...',
-        detail: 'Please wait.',
-        indeterminate: false,
-        closeOnComplete: true // Close when complete
-      })
+      // Initialize ProgressBar only if it doesn't exist
+      if (!progressBar) {
+        progressBar = new ProgressBar({
+          title: 'Downloading Update...',
+          text: 'Downloading...',
+          detail: 'Please wait.',
+          indeterminate: false,
+          closeOnComplete: true,
+          browserWindow: {
+            closable: false
+          }
+        })
 
-      progressBar.show() // Show the progress bar
+        // Handle 'completed' event
+        progressBar.on('completed', () => {
+          console.log('Update download completed')
+          progressBar!.detail = 'Download complete.'
+          progressBar!.close()
+          progressBar = null
+        })
 
-      autoUpdater.downloadUpdate() // Start downloading the update
+        // Handle 'aborted' event
+        progressBar.on('aborted', () => {
+          console.log('Update download aborted')
+          progressBar!.close()
+          progressBar = null
+        })
+
+        // Start downloading the update
+        autoUpdater.downloadUpdate()
+      }
     }
   })
 
   autoUpdater.on('download-progress', (progressObj) => {
-    const percent = Math.round(progressObj.percent)
-    progressBar.setValue(percent) // Set the determinate progress bar
+    if (progressBar) {
+      const percent = Math.round(progressObj.percent)
+      progressBar.value = percent
+      progressBar.detail = `Downloaded ${percent}% (${formatBytes(progressObj.transferred)} of ${formatBytes(progressObj.total)} at ${formatBytes(progressObj.bytesPerSecond)}/s)`
+    }
   })
 
   autoUpdater.on('update-not-available', () => {
@@ -95,16 +113,19 @@ const setupAutoUpdater = () => {
       title: 'Update Error',
       message: `Error in auto-updater: ${error.message}`
     })
-  })
 
-  autoUpdater.on('download-progress', (progressObj) => {
-    const percent = Math.round(progressObj.percent)
-    console.log(`Download speed: ${progressObj.bytesPerSecond}`)
-    console.log(`Downloaded ${percent}%`)
-    console.log(`Downloaded ${progressObj.transferred} of ${progressObj.total} bytes`)
+    if (progressBar) {
+      progressBar.close()
+      progressBar = null
+    }
   })
 
   autoUpdater.on('update-downloaded', async () => {
+    if (progressBar) {
+      progressBar.setCompleted()
+      progressBar = null
+    }
+
     const response = await dialog.showMessageBox({
       type: 'info',
       buttons: ['Restart', 'Later'],
@@ -113,7 +134,7 @@ const setupAutoUpdater = () => {
     })
 
     if (response.response === 0) {
-      autoUpdater.quitAndInstall() // Restart and install the update
+      autoUpdater.quitAndInstall()
     }
   })
 
@@ -121,104 +142,127 @@ const setupAutoUpdater = () => {
   autoUpdater.checkForUpdates()
 }
 
-// IPC to get the base URL
-ipcMain.handle('getBaseUrl', async () => {
-  const { default: Store } = await import('electron-store') // Destructure the default export
-  const store = new Store()
-  return store.get('axiosBaseUrl')
-})
+// Function to set up IPC handlers with dynamic imports
+function setupIpcHandlers() {
+  // Handler for 'getBaseUrl'
+  ipcMain.handle('getBaseUrl', async () => {
+    const { default: Store } = await import('electron-store')
+    const store = new Store()
+    return store.get('axiosBaseUrl')
+  })
 
-// IPC to set the base URL
-ipcMain.handle('setBaseUrl', async (_event, newUrl: string) => {
-  const { default: Store } = await import('electron-store') // Destructure the default export
-  const store = new Store()
-  store.set('axiosBaseUrl', newUrl)
-})
+  // Handler for 'setBaseUrl'
+  ipcMain.handle('setBaseUrl', async (_event, newUrl: string) => {
+    const { default: Store } = await import('electron-store')
+    const store = new Store()
+    store.set('axiosBaseUrl', newUrl)
+  })
 
-// IPC to get the access token
-ipcMain.handle('getAccessToken', async () => {
-  const { default: Store } = await import('electron-store')
-  const store = new Store()
-  return store.get('accessToken') || null
-})
+  // Handler for 'getAccessToken'
+  ipcMain.handle('getAccessToken', async () => {
+    const { default: Store } = await import('electron-store')
+    const store = new Store()
+    return store.get('accessToken') || null
+  })
 
-// IPC to set the access token
-ipcMain.handle('setAccessToken', async (_event, token: string) => {
-  const { default: Store } = await import('electron-store')
-  const store = new Store()
-  store.set('accessToken', token)
-})
+  // Handler for 'setAccessToken'
+  ipcMain.handle('setAccessToken', async (_event, token: string) => {
+    const { default: Store } = await import('electron-store')
+    const store = new Store()
+    store.set('accessToken', token)
+  })
 
-// IPC to remove the access token
-ipcMain.handle('removeAccessToken', async () => {
-  const { default: Store } = await import('electron-store')
-  const store = new Store()
-  store.delete('accessToken')
-})
+  // Handler for 'removeAccessToken'
+  ipcMain.handle('removeAccessToken', async () => {
+    const { default: Store } = await import('electron-store')
+    const store = new Store()
+    store.delete('accessToken')
+  })
 
-// IPC to get the access token
-ipcMain.handle('getUserData', async () => {
-  const { default: Store } = await import('electron-store')
-  const store = new Store()
-  return store.get('userData') || null
-})
+  // Handler for 'getUserData'
+  ipcMain.handle('getUserData', async () => {
+    const { default: Store } = await import('electron-store')
+    const store = new Store()
+    return store.get('userData') || null
+  })
 
-// IPC to set user data (uid, displayName)
-ipcMain.handle('setUserData', async (_event, userData: { uid?: string; displayName?: string }) => {
-  const { default: Store } = await import('electron-store')
-  const store = new Store()
-  store.set('userData', userData)
-})
+  // Handler for 'setUserData'
+  ipcMain.handle(
+    'setUserData',
+    async (_event, userData: { uid?: string; displayName?: string }) => {
+      const { default: Store } = await import('electron-store')
+      const store = new Store()
+      store.set('userData', userData)
+    }
+  )
 
-// IPC to remove user data
-ipcMain.handle('removeUserData', async () => {
-  const { default: Store } = await import('electron-store')
-  const store = new Store()
-  store.delete('userData')
-})
+  // Handler for 'removeUserData'
+  ipcMain.handle('removeUserData', async () => {
+    const { default: Store } = await import('electron-store')
+    const store = new Store()
+    store.delete('userData')
+  })
 
-// IPC to get the login status
-ipcMain.handle('getLoginStatus', async () => {
-  const { default: Store } = await import('electron-store')
-  const store = new Store()
-  return store.get('isLoggedIn') || false // Return false if not set
-})
+  // Handler for 'getLoginStatus'
+  ipcMain.handle('getLoginStatus', async () => {
+    const { default: Store } = await import('electron-store')
+    const store = new Store()
+    return store.get('isLoggedIn') || false
+  })
 
-// IPC to set the login status
-ipcMain.handle('setLoginStatus', async (_event, status: boolean) => {
-  const { default: Store } = await import('electron-store')
-  const store = new Store()
-  store.set('isLoggedIn', status)
-})
-
-// This method will be called when Electron has finished initialization.
-app.whenReady().then(async () => {
-  await createStore() // Ensure Store is initialized
-
-  // Set app user model id for Windows
-  electronApp.setAppUserModelId('com.electron')
-
-  // Default open or close DevTools by F12 in development
-  // and ignore CommandOrControl + R in production.
-  app.on('browser-window-created', (_, window) => {
-    optimizer.watchWindowShortcuts(window)
+  // Handler for 'setLoginStatus'
+  ipcMain.handle('setLoginStatus', async (_event, status: boolean) => {
+    const { default: Store } = await import('electron-store')
+    const store = new Store()
+    store.set('isLoggedIn', status)
   })
 
   // IPC test
   ipcMain.on('ping', () => console.log('pong'))
+}
 
-  // Setup auto updater
+// Utility function to format bytes into a readable string
+function formatBytes(bytes: number): string {
+  if (bytes === 0) return '0 B'
+  const k = 1024
+  const sizes = ['B', 'KB', 'MB', 'GB', 'TB']
+  const i = Math.floor(Math.log(bytes) / Math.log(k))
+  return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i]
+}
+
+// Main initialization function
+async function initializeApp() {
+  // Set app user model id for Windows
+  electronApp.setAppUserModelId('com.electron')
+
+  // Watch window shortcuts
+  app.on('browser-window-created', (_, window) => {
+    optimizer.watchWindowShortcuts(window)
+  })
+
+  // Set up auto-updater
   setupAutoUpdater()
 
   // Create the main window
-  createWindow()
+  createMainWindow()
 
+  // Set up IPC handlers
+  setupIpcHandlers()
+
+  // Handle app activation (macOS)
   app.on('activate', () => {
-    if (BrowserWindow.getAllWindows().length === 0) createWindow()
+    if (BrowserWindow.getAllWindows().length === 0) {
+      createMainWindow()
+    }
   })
+}
+
+// Run initialization when the app is ready
+app.whenReady().then(() => {
+  initializeApp()
 })
 
-// Quit when all windows are closed, except on macOS.
+// Quit the app when all windows are closed, except on macOS
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
     app.quit()
