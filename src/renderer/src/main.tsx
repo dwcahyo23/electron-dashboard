@@ -5,14 +5,17 @@
 // axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*'
 // axios.defaults.headers.common['Content-Type'] = 'application/json'
 import { MantineProvider } from '@mantine/core'
-import '@mantine/core/styles.css'
+import { MantineEmotionProvider } from '@mantine/emotion'
 import { Notifications } from '@mantine/notifications'
-import '@mantine/notifications/styles.css'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import axios from 'axios'
 import React, { useEffect } from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App'
+
+import '@mantine/notifications/styles.css'
+
+import '@mantine/core/styles.css'
 
 const queryClient = new QueryClient()
 
@@ -31,8 +34,10 @@ const Main = () => {
   return (
     <QueryClientProvider client={queryClient}>
       <MantineProvider withGlobalClasses withStaticClasses>
-        <Notifications />
-        <App />
+        <MantineEmotionProvider>
+          <Notifications />
+          <App />
+        </MantineEmotionProvider>
       </MantineProvider>
     </QueryClientProvider>
   )

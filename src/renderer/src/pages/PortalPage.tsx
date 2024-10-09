@@ -1,24 +1,135 @@
 // src/pages/PortalPage.tsx
 
-import { Button, Card, Flex, Grid, Image, Text, Title } from '@mantine/core'
-import axios from 'axios'; // Ensure axios is imported
+import { Button, Card, Flex, Grid, Image, Text, Title, useMantineTheme } from '@mantine/core'
+import { createStyles } from '@mantine/emotion'
+import { IconChartLine, IconCheck, IconEye, IconTools } from '@tabler/icons-react'
+import axios from 'axios'
 import { Link, useNavigate } from 'react-router-dom'
 import backgroundImageUrl from '../assets/iot-background.jpg'
 
+// RGBA Conversion Function
+const hexToRgba = (hex: string, alpha: number) => {
+  hex = hex.replace(/^#/, '')
+  let r: number, g: number, b: number
+
+  if (hex.length === 3) {
+    r = parseInt(hex[0] + hex[0], 16)
+    g = parseInt(hex[1] + hex[1], 16)
+    b = parseInt(hex[2] + hex[2], 16)
+  } else {
+    r = parseInt(hex.substring(0, 2), 16)
+    g = parseInt(hex.substring(2, 4), 16)
+    b = parseInt(hex.substring(4, 6), 16)
+  }
+
+  return `rgba(${r}, ${g}, ${b}, ${alpha})`
+}
+
+const useStyles = createStyles((theme) => ({
+  container: {
+    height: '100vh',
+    overflow: 'hidden',
+    position: 'relative'
+    // backgroundColor: theme.colors.dark[7]
+  },
+  overlay: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    width: '100%',
+    height: '100%',
+    backgroundColor: 'rgba(0, 0, 0, 0.6)',
+    zIndex: -1
+  },
+  content: {
+    position: 'relative',
+    zIndex: 1,
+    padding: theme.spacing.md,
+    height: '100%'
+  },
+  title: {
+    color: theme.white,
+    textAlign: 'center',
+    marginBottom: theme.spacing.xl,
+    textShadow: '2px 2px 6px rgba(0, 0, 0, 0.7)',
+    fontWeight: 700
+  },
+  card: {
+    transition: 'transform 0.3s, box-shadow 0.3s',
+    cursor: 'pointer',
+    '&:hover': {
+      transform: 'scale(1.05)',
+      boxShadow: theme.shadows.md
+    }
+  },
+  cardIcon: {
+    marginBottom: theme.spacing.sm
+  },
+  logoutButton: {
+    marginTop: theme.spacing.xl
+  }
+}))
+
+interface PortalCardProps {
+  title: string
+  description: string
+  to: string
+  icon: React.ReactNode
+  backgroundColor: string
+}
+
+const PortalCard: React.FC<PortalCardProps> = ({
+  title,
+  description,
+  to,
+  icon,
+  backgroundColor
+}) => {
+  const { classes } = useStyles()
+  return (
+    <Card
+      component={Link}
+      to={to}
+      padding="lg"
+      shadow="sm"
+      className={classes.card}
+      style={{ backgroundColor }}
+      aria-label={`Akses aplikasi ${title}`}
+    >
+      <Flex direction="column" align="center" justify="center" style={{ height: '100%' }}>
+        <div className={classes.cardIcon}>{icon}</div>
+        <Text size="lg" fw={500}>
+          {title}
+        </Text>
+        <Text color="white" size="sm">
+          {description}
+        </Text>
+      </Flex>
+    </Card>
+  )
+}
+
 const PortalPage = () => {
-  const navigate = useNavigate() // Use useNavigate for navigation
+  const navigate = useNavigate()
+  const { classes } = useStyles()
+  const theme = useMantineTheme()
 
   const handleLogout = async () => {
-    await window.api.removeAccessToken()
-    delete axios.defaults.headers.common['Authorization']
-    await window.api.setLoginStatus(false)
-    await window.api.removeUserData()
-    navigate('/Login')
+    try {
+      await window.api.removeAccessToken()
+      delete axios.defaults.headers.common['Authorization']
+      await window.api.setLoginStatus(false)
+      await window.api.removeUserData()
+      navigate('/Login')
+    } catch (error) {
+      console.error('Logout failed:', error)
+      // Optionally, display an error notification to the user
+    }
   }
 
   return (
-    <div style={{ height: '100vh', overflow: 'hidden', position: 'relative' }}>
-      {/* Full-Width and Full-Height Background Image */}
+    <div className={classes.container}>
+      {/* Background Image */}
       <Image
         src={backgroundImageUrl}
         alt="Manufacturing Background"
@@ -35,29 +146,11 @@ const PortalPage = () => {
       />
 
       {/* Dark Overlay */}
-      <div
-        style={{
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          width: '100%',
-          height: '100%',
-          backgroundColor: 'rgba(0, 0, 0, 0.5)', // Dark overlay with transparency
-          zIndex: 0 // Ensure it stays above the image but below the text
-        }}
-      />
+      <div className={classes.overlay} />
 
-      <Flex
-        direction="column"
-        justify="center"
-        align="center"
-        style={{ height: '100%', padding: '20px', position: 'relative', zIndex: 1 }}
-      >
-        <Title
-          order={2}
-          mb="lg"
-          style={{ color: '#fff', textShadow: '2px 2px 4px rgba(0, 0, 0, 0.6)' }}
-        >
+      {/* Main Content */}
+      <Flex direction="column" justify="center" align="center" className={classes.content}>
+        <Title order={2} className={classes.title}>
           Selamat Datang di Portal Aplikasi IOT
         </Title>
 
@@ -67,66 +160,47 @@ const PortalPage = () => {
           gutter="md"
           style={{ width: '100%', maxWidth: '1200px' }}
         >
-          {/* Kolom 1 */}
-          <Grid.Col span={{ base: 12, sm: 6 }}>
-            <Card
-              component={Link}
+          <Grid.Col span={{ xs: 12, sm: 6, md: 4 }}>
+            <PortalCard
+              title="OEEInsight"
+              description="Akses aplikasi OEE"
               to="/app-apq"
-              padding="lg"
-              shadow="sm"
-              style={{
-                width: '100%',
-                textAlign: 'center',
-                backgroundColor: 'rgba(227, 242, 253, 0.8)', // Light blue background with transparency
-                color: '#212529', // Dark color
-                transition: 'transform 0.3s',
-                height: '150px', // Fixed height
-                marginBottom: '20px', // Spacing below the card
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'center',
-                alignItems: 'center',
-                borderRadius: '10px' // Rounded corners for the card
-              }}
-              onMouseEnter={(e) => (e.currentTarget.style.transform = 'scale(1.05)')}
-              onMouseLeave={(e) => (e.currentTarget.style.transform = 'scale(1)')}
-            >
-              <Text size="lg" fw={500}>
-                APQ
-              </Text>
-              <Text color="dimmed">Akses aplikasi APQ Anda</Text>
-            </Card>
+              icon={<IconChartLine size={32} color={theme.colors.blue[6]} />}
+              backgroundColor={hexToRgba(theme.colors.blue[6], 0.8)} // Use the conversion function
+            />
           </Grid.Col>
 
-          {/* Kolom 2 */}
-          <Grid.Col span={{ base: 12, sm: 6 }}>
-            <Card
-              component={Link}
-              to="/app-mn-wo" // Ganti dengan route aplikasi lain jika ada
-              padding="lg"
-              shadow="sm"
-              style={{
-                width: '100%',
-                textAlign: 'center',
-                backgroundColor: 'rgba(200, 230, 201, 0.8)', // Light green background with transparency
-                color: '#212529', // Dark color
-                transition: 'transform 0.3s',
-                height: '150px', // Fixed height
-                marginBottom: '20px', // Spacing below the card
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'center',
-                alignItems: 'center',
-                borderRadius: '10px' // Rounded corners for the card
-              }}
-              onMouseEnter={(e) => (e.currentTarget.style.transform = 'scale(1.05)')}
-              onMouseLeave={(e) => (e.currentTarget.style.transform = 'scale(1)')}
-            >
-              <Text size="lg" fw={500}>
-                MN-WO
-              </Text>
-              <Text color="dimmed">Akses aplikasi lainnya</Text>
-            </Card>
+          <Grid.Col span={{ xs: 12, sm: 6, md: 4 }}>
+            <PortalCard
+              title="MN WorkOrder"
+              description="Akses aplikasi maintenance work order"
+              // to="/maintenance-workorder"
+              to=""
+              icon={<IconTools size={32} color={theme.colors.green[6]} />}
+              backgroundColor={hexToRgba(theme.colors.green[6], 0.8)} // Use the conversion function
+            />
+          </Grid.Col>
+
+          <Grid.Col span={{ xs: 12, sm: 6, md: 4 }}>
+            <PortalCard
+              title="ToolMonitor"
+              description="Akses aplikasi live time tool monitor"
+              // to="/tool-monitor"
+              to=""
+              icon={<IconEye size={32} color={theme.colors.teal[6]} />}
+              backgroundColor={hexToRgba(theme.colors.teal[6], 0.8)} // Use the conversion function
+            />
+          </Grid.Col>
+
+          <Grid.Col span={{ xs: 12, sm: 6, md: 4 }}>
+            <PortalCard
+              title="OKGuard - QSense"
+              description="Akses aplikasi QC judgment OK/NG"
+              // to="/okguard-qsense"
+              to=""
+              icon={<IconCheck size={32} color={theme.colors.red[6]} />}
+              backgroundColor={hexToRgba(theme.colors.red[6], 0.8)} // Use the conversion function
+            />
           </Grid.Col>
         </Grid>
 
@@ -135,7 +209,8 @@ const PortalPage = () => {
           onClick={handleLogout}
           color="red"
           variant="outline"
-          style={{ marginTop: '20px' }} // Margin for spacing
+          size="md"
+          className={classes.logoutButton}
         >
           Logout
         </Button>

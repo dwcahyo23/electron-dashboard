@@ -31,7 +31,7 @@ export default function Login() {
 
   // Fetch the current base URL when the component mounts
   useEffect(() => {
-    const fetchBaseUrl = async () => {
+    const getBaseUrl = async () => {
       try {
         const url = await window.api.getBaseUrl()
         if (url === null) {
@@ -48,7 +48,7 @@ export default function Login() {
       }
     }
 
-    const fetchLoginStatus = async () => {
+    const getLoginStatus = async () => {
       try {
         const status = await window.api.getLoginStatus() // Fetch login status from Electron Store
         setIsLoggedIn(status)
@@ -62,8 +62,21 @@ export default function Login() {
       }
     }
 
-    fetchBaseUrl()
-    fetchLoginStatus()
+    const getLoginCache = async () => {
+      try {
+        const cache = await window.api.getLoginCache()
+        if (cache) {
+          setNik(cache.nik)
+          setPassword(cache.password)
+        }
+      } catch (error) {
+        console.error(error)
+      }
+    }
+
+    getLoginCache()
+    getBaseUrl()
+    getLoginStatus()
   }, [])
 
   const handleSave = async () => {
@@ -112,6 +125,8 @@ export default function Login() {
         nik,
         password
       })
+
+      await window.api.setLoginCache({ nik, password })
 
       if (response.data.success && response.data.data.access_token) {
         const token = response.data.data.access_token
@@ -192,7 +207,7 @@ export default function Login() {
             </Tabs.List>
 
             <Tabs.Panel value="login">
-              <Stack gap="lg">
+              <Stack gap="lg" mt="md">
                 {!isLoggedIn ? (
                   <>
                     <TextInput
@@ -215,20 +230,28 @@ export default function Login() {
                     </Button>
                   </>
                 ) : (
-                  <Button
-                    onClick={handleLogout}
-                    mt={16}
-                    color="red"
-                    leftSection={<IconLogout size={16} />}
-                  >
-                    Logout
-                  </Button>
+                  <>
+                    <Button
+                      onClick={() => navigate('/portal')}
+                      leftSection={<IconExternalLink size={16} />}
+                    >
+                      Back to Portal
+                    </Button>
+                    <Button
+                      onClick={handleLogout}
+                      mt={16}
+                      color="red"
+                      leftSection={<IconLogout size={16} />}
+                    >
+                      Logout
+                    </Button>
+                  </>
                 )}
               </Stack>
             </Tabs.Panel>
 
             <Tabs.Panel value="baseUrl">
-              <Stack gap="lg">
+              <Stack gap="lg" mt="md">
                 <TextInput
                   label="Base URL"
                   placeholder="Enter the base URL"

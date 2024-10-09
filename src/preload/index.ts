@@ -14,7 +14,10 @@ const api = {
   getUserData: (data: any) => ipcRenderer.invoke('getUserData', data),
   removeUserData: () => ipcRenderer.invoke('removeUserData'),
   getLoginStatus: () => ipcRenderer.invoke('getLoginStatus'),
-  setLoginStatus: (status: any) => ipcRenderer.invoke('setLoginStatus', status)
+  setLoginStatus: (status: any) => ipcRenderer.invoke('setLoginStatus', status),
+  setLoginCache: (cache: { nik: string; password: string }) =>
+    ipcRenderer.invoke('setLoginCache', cache),
+  getLoginCache: () => ipcRenderer.invoke('getLoginCache')
 }
 
 // Use `contextBridge` APIs to expose Electron APIs to

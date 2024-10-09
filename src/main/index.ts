@@ -217,6 +217,20 @@ function setupIpcHandlers() {
     store.set('isLoggedIn', status)
   })
 
+  // Handler for 'setLoginCache'
+  ipcMain.handle('setLoginCache', async (_event, cache: { nik: string; password: string }) => {
+    const { default: Store } = await import('electron-store')
+    const store = new Store()
+    store.set('loginCache', cache)
+  })
+
+  // Handler for 'getLoginCache'
+  ipcMain.handle('getLoginCache', async () => {
+    const { default: Store } = await import('electron-store')
+    const store = new Store()
+    return store.get('loginCache') || null
+  })
+
   // IPC test
   ipcMain.on('ping', () => console.log('pong'))
 }

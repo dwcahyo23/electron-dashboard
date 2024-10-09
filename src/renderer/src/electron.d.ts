@@ -11,10 +11,11 @@ declare global {
       removeUserData: () => Promise<void>
       getLoginStatus: () => Promise<boolean>
       setLoginStatus: (status: boolean) => Promise<void>
+      getLoginCache: () => Promise<{ nik: string; password: string } | null>
+      setLoginCache: (cache: { nik: string; password: string }) => Promise<void>
     }
   }
 }
 
 // This is required to make TypeScript recognize this file as a module
-export { }
-
+export {}
