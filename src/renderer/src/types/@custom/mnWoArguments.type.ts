@@ -1,6 +1,6 @@
 import { PartialDeep } from 'type-fest'
 import { Status } from '../enums'
-import { MnWoInterface } from '../mnWo/dto/mnWo.dto'
+import { MnWoInterface } from '../mnWo'
 
 /**
  * Interface untuk argumen metode createMnWo
