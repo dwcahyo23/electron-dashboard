@@ -1,7 +1,7 @@
 import { Group, Text } from '@mantine/core'
 import { Dropzone } from '@mantine/dropzone'
 import '@mantine/dropzone/styles.css'
-import { FileExcel } from '@renderer/types/File'
+import { FileExcel } from '@renderer/types/@custom'
 import { useMutation } from '@tanstack/react-query'
 import axios from 'axios'
 import { useState } from 'react'

@@ -2,10 +2,11 @@
   "extends": "@electron-toolkit/tsconfig/tsconfig.web.json",
   "include": [
     "src/renderer/src/env.d.ts",
+    "src/preload/interfaces.ts", // add this line
     "src/renderer/src/debouce.d.ts",
     "src/renderer/src/**/*",
     "src/renderer/src/**/*.tsx",
-    "src/renderer/src/electron.d.ts", // Include your type declaration
+    "src/renderer/src/x", // Include your type declaration
     "src/preload/*.d.ts"
   ],
   "compilerOptions": {
@@ -20,11 +21,11 @@
     "paths": {
       "@renderer/*": [
         "src/renderer/src/*"
+      ],
+      "@renderer/types/*": [
+        "./src/renderer/src/types/*"
       ]
     },
-    "typeRoots": [
-      "node_modules/@types"
-    ],
     "types": ["debounce"]
   }
 }

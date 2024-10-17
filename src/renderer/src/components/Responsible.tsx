@@ -1,5 +1,5 @@
 import { Flex } from '@mantine/core'
-import { DelayApiInfoUserArg, DelayedApiInfoUserResponse } from '@renderer/types/Api'
+import { DelayApiInfoUserArg, DelayedApiInfoUserResponse } from '@renderer/types/@custom'
 import { useQuery } from '@tanstack/react-query'
 import axios from 'axios'
 import dayjs from 'dayjs'

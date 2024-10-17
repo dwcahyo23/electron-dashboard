@@ -1,23 +1,32 @@
 import { electronAPI } from '@electron-toolkit/preload'
 import { contextBridge, ipcRenderer } from 'electron'
+import { LoginCache, PortalSetting, UserData } from './interfaces' // Importing the PortalSetting interface
 
-// Custom APIs for renderer
+// Group API Methods
 const api = {
-  getBaseUrl: () => ipcRenderer.invoke('getBaseUrl'),
-  setBaseUrl: (url: string) => ipcRenderer.invoke('setBaseUrl', url),
   onVersion: (callback: (arg0: any) => void) =>
     ipcRenderer.on('version', (_event, version) => callback(version)),
-  getAccessToken: () => ipcRenderer.invoke('getAccessToken'),
-  setAccessToken: (token: any) => ipcRenderer.invoke('setAccessToken', token),
-  removeAccessToken: () => ipcRenderer.invoke('removeAccessToken'),
-  setUserData: (data: any) => ipcRenderer.invoke('setUserData', data),
-  getUserData: (data: any) => ipcRenderer.invoke('getUserData', data),
-  removeUserData: () => ipcRenderer.invoke('removeUserData'),
-  getLoginStatus: () => ipcRenderer.invoke('getLoginStatus'),
-  setLoginStatus: (status: any) => ipcRenderer.invoke('setLoginStatus', status),
-  setLoginCache: (cache: { nik: string; password: string }) =>
-    ipcRenderer.invoke('setLoginCache', cache),
-  getLoginCache: () => ipcRenderer.invoke('getLoginCache')
+  auth: {
+    getAccessToken: () => ipcRenderer.invoke('getAccessToken'),
+    setAccessToken: (token: string) => ipcRenderer.invoke('setAccessToken', token),
+    removeAccessToken: () => ipcRenderer.invoke('removeAccessToken'),
+    getLoginStatus: () => ipcRenderer.invoke('getLoginStatus'),
+    setLoginStatus: (status: boolean) => ipcRenderer.invoke('setLoginStatus', status),
+    setLoginCache: (loginCache: LoginCache) => ipcRenderer.invoke('setLoginCache', loginCache),
+    getLoginCache: () => ipcRenderer.invoke('getLoginCache')
+  },
+  user: {
+    setUserData: (userData: UserData) => ipcRenderer.invoke('setUserData', userData),
+    getUserData: () => ipcRenderer.invoke('getUserData'),
+    removeUserData: () => ipcRenderer.invoke('removeUserData')
+  },
+  settings: {
+    getBaseUrl: () => ipcRenderer.invoke('getBaseUrl'),
+    setBaseUrl: (url: string) => ipcRenderer.invoke('setBaseUrl', url),
+    getPortalSetting: () => ipcRenderer.invoke('getPortalSetting'),
+    setPortalSetting: (portalSetting: PortalSetting) =>
+      ipcRenderer.invoke('setPortalSetting', portalSetting)
+  }
 }
 
 // Use `contextBridge` APIs to expose Electron APIs to

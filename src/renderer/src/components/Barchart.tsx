@@ -1,5 +1,5 @@
 import { Flex, Paper, Text } from '@mantine/core'
-import { DelayApiInfoCustResponse } from '@renderer/types/Api'
+import { DelayApiInfoCustResponse } from '@renderer/types/@custom'
 import { useQuery } from '@tanstack/react-query'
 import axios from 'axios'
 import dayjs from 'dayjs'

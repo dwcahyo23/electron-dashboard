@@ -3,20 +3,22 @@ import CardList from '@renderer/components/CardList'
 import Chart from '@renderer/components/Chart'
 import Loading from '@renderer/components/Loading'
 import UserCarouselVirtualized from '@renderer/components/UserCarouselVritualized'
-import { BaseResponse } from '@renderer/types/base/response.type'
-import { EntityPdApqLeaderDailyProgresInterface } from '@renderer/types/pdApqLeaderDailyProgres/entities/pdApqLeaderDailyProgres.entity'
-import { EntityPdApqLeaderMonthlyProgresInterface } from '@renderer/types/pdApqLeaderMonthlyProgres/entities/pdApqLeaderMonthlyProgres.entity'
-import { EntityPdApqLeaderWeeklyProgresInterface } from '@renderer/types/pdApqLeaderWeeklyProgres/entities/pdApqLeaderWeeklyProgres.entity'
-import { EntityPdApqSectionMonthlyInterface } from '@renderer/types/pdApqSectionMonthly/entities/pdApqSectionMonthly.entity'
-import { EntityPdApqSectionWeeklyInterface } from '@renderer/types/pdApqSectionWeekly/entities/pdApqSectionWeekly.entity'
-import { EntityPdApqUserDailyProgresInterface } from '@renderer/types/pdApqUserDailyProgres/entities/pdApqUserDailyProgres.entity'
-import { EntityPdApqUserDailyWorstAndBestInterface } from '@renderer/types/pdApqUserDailyWorstAndBest/entities/pdApqUserDailyWorstAndBest.entity'
-import { EntityPdApqUserMonthlyProgresInterface } from '@renderer/types/pdApqUserMonthlyProgres/entities/pdApqUserMonthlyProgres.entity'
-import { EntityPdApqUserMonthlyWorstAndBestInterface } from '@renderer/types/pdApqUserMonthlyWorstAndBest/entities/pdApqUserMonthlyWorstAndBest.entity'
-import { EntityPdApqUserWeeklyProgresInterface } from '@renderer/types/pdApqUserWeeklyProgres/entities/pdApqUserWeeklyProgres.entity'
-import { EntityPdApqUserWeeklyWorstAndBestInterface } from '@renderer/types/pdApqUserWeeklyWorstAndBest/entities/pdApqUserWeeklyWorstAndBest.entity'
+import {
+  EntityPdApqLeaderDailyProgresInterface,
+  EntityPdApqLeaderMonthlyProgresInterface,
+  EntityPdApqLeaderWeeklyProgresInterface,
+  EntityPdApqSectionMonthlyInterface,
+  EntityPdApqSectionWeeklyInterface,
+  EntityPdApqUserDailyProgresInterface,
+  EntityPdApqUserDailyWorstAndBestInterface,
+  EntityPdApqUserMonthlyProgresInterface,
+  EntityPdApqUserMonthlyWorstAndBestInterface,
+  EntityPdApqUserWeeklyProgresInterface,
+  EntityPdApqUserWeeklyWorstAndBestInterface
+} from '@renderer/types'
+import { BaseResponse } from '@renderer/types/base'
+import { createAxiosInstances } from '@renderer/utils/apiClient'
 import { useQuery } from '@tanstack/react-query'
-import axios from 'axios'
 import { useEffect, useState } from 'react'
 
 // Komponen DashboardAPQ
@@ -46,9 +48,10 @@ const DashboardAPQ = () => {
       if (section !== 'All') {
         url += `?section=${section}`
       }
+      const { baseApi } = await createAxiosInstances()
 
       const { data } =
-        await axios.get<
+        await baseApi.get<
           BaseResponse<
             | EntityPdApqUserDailyProgresInterface[]
             | EntityPdApqUserWeeklyProgresInterface[]
@@ -91,9 +94,9 @@ const DashboardAPQ = () => {
       if (section !== 'All') {
         url += `?section=${section}`
       }
-
+      const { baseApi } = await createAxiosInstances()
       const { data } =
-        await axios.get<
+        await baseApi.get<
           BaseResponse<
             | EntityPdApqUserDailyWorstAndBestInterface[]
             | EntityPdApqUserMonthlyWorstAndBestInterface[]
@@ -136,9 +139,9 @@ const DashboardAPQ = () => {
       if (section !== 'All') {
         url += `?section=${section}`
       }
-
+      const { baseApi } = await createAxiosInstances()
       const { data } =
-        await axios.get<
+        await baseApi.get<
           BaseResponse<
             | EntityPdApqLeaderDailyProgresInterface[]
             | EntityPdApqLeaderMonthlyProgresInterface[]
@@ -175,9 +178,9 @@ const DashboardAPQ = () => {
       if (section !== 'All' && timeRange !== 'daily') {
         url += `?section=${section}`
       }
-
+      const { baseApi } = await createAxiosInstances()
       const { data } =
-        await axios.get<
+        await baseApi.get<
           BaseResponse<EntityPdApqSectionMonthlyInterface[] | EntityPdApqSectionWeeklyInterface[]>
         >(url)
 

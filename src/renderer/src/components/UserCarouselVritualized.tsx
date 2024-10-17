@@ -9,9 +9,7 @@ import {
   Text,
   useMantineColorScheme
 } from '@mantine/core'
-import { EntityPdApqUserDailyProgresInterface } from '@renderer/types/pdApqUserDailyProgres/entities/pdApqUserDailyProgres.entity'
-import { EntityPdApqUserMonthlyProgresInterface } from '@renderer/types/pdApqUserMonthlyProgres/entities/pdApqUserMonthlyProgres.entity'
-import { EntityPdApqUserWeeklyProgresInterface } from '@renderer/types/pdApqUserWeeklyProgres/entities/pdApqUserWeeklyProgres.entity'
+import { EntityPdApqUserDailyProgresInterface, EntityPdApqUserMonthlyProgresInterface, EntityPdApqUserWeeklyProgresInterface } from '@renderer/types'
 import { IconArrowDown, IconArrowUp, IconMinus } from '@tabler/icons-react'
 import { useEffect, useState } from 'react'
 import { animated } from 'react-spring'

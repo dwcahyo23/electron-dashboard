@@ -2,7 +2,7 @@
 
 import { Button, Card, Flex, Grid, Image, Text, Title, useMantineTheme } from '@mantine/core'
 import { createStyles } from '@mantine/emotion'
-import { IconChartLine, IconCheck, IconEye, IconTools } from '@tabler/icons-react'
+import { Icon3dCubeSphere, IconChartLine, IconCheck, IconEye, IconTools } from '@tabler/icons-react'
 import axios from 'axios'
 import { Link, useNavigate } from 'react-router-dom'
 import backgroundImageUrl from '../assets/iot-background.jpg'
@@ -116,10 +116,10 @@ const PortalPage = () => {
 
   const handleLogout = async () => {
     try {
-      await window.api.removeAccessToken()
+      await window.api.auth.removeAccessToken()
       delete axios.defaults.headers.common['Authorization']
-      await window.api.setLoginStatus(false)
-      await window.api.removeUserData()
+      await window.api.auth.setLoginStatus(false)
+      await window.api.user.removeUserData()
       navigate('/Login')
     } catch (error) {
       console.error('Logout failed:', error)
@@ -189,6 +189,17 @@ const PortalPage = () => {
               to=""
               icon={<IconEye size={32} color={theme.colors.teal[6]} />}
               backgroundColor={hexToRgba(theme.colors.teal[6], 0.8)} // Use the conversion function
+            />
+          </Grid.Col>
+
+          <Grid.Col span={{ xs: 12, sm: 6, md: 4 }}>
+            <PortalCard
+              title="QSense"
+              description="Akses aplikasi Q-Sense Forming"
+              // to="/okguard-qsense"
+              to="/app-qsense"
+              icon={<Icon3dCubeSphere size={32} color={theme.colors.orange[6]} />}
+              backgroundColor={hexToRgba(theme.colors.orange[6], 0.8)} // Use the conversion function
             />
           </Grid.Col>
 

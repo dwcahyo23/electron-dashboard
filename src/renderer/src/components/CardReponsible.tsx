@@ -1,5 +1,5 @@
 import { Card, Grid, Group, RingProgress, Text, useMantineTheme } from '@mantine/core'
-import { DelayedInfoUser } from '@renderer/types/Api'
+import { DelayedInfoUser } from '@renderer/types/@custom'
 import { IconTicket } from '@tabler/icons-react'
 import { useEffect, useState } from 'react'
 import QRCode from 'react-qr-code'

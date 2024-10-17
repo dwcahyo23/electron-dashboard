@@ -2,8 +2,8 @@ import { Button, Group, Paper, Text } from '@mantine/core'
 import { Dropzone, FileWithPath } from '@mantine/dropzone'
 import '@mantine/dropzone/styles.css'
 import usePostData from '@renderer/hook/usePostData'
-import { ExcelApq } from '@renderer/types/File'
-import { CreatePdApqInterface } from '@renderer/types/pdApq/dto/create-pdApq.dto'
+import { CreatePdApqInterface } from '@renderer/types'
+import { ExcelApq } from '@renderer/types/@custom'
 import { useEffect, useState } from 'react'
 import * as XLSX from 'xlsx'
 
@@ -86,8 +86,11 @@ function UploadApq(): JSX.Element {
   useEffect(() => {
     const initializeEventSource = async () => {
       try {
-        const baseUrl = await window.api.getBaseUrl() // Get the base URL dynamically
-        const eventSource = new EventSource(`${baseUrl}/sse/events`)
+        // const { baseApi } = await createAxiosInstances()
+
+        const portalSetting = await window.api.settings.getPortalSetting()
+
+        const eventSource = new EventSource(`${portalSetting.baseApi.url}/sse/events`)
 
         eventSource.onmessage = (event) => {
           const data = JSON.parse(event.data)

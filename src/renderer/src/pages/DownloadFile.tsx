@@ -1,6 +1,6 @@
 import { Button } from '@mantine/core'
 import Loading from '@renderer/components/Loading'
-import { DelayApiResponse, DelayedToday } from '@renderer/types/Api'
+import { DelayApiResponse, DelayedToday } from '@renderer/types/@custom'
 import { IconDownload } from '@tabler/icons-react'
 import { useQuery } from '@tanstack/react-query'
 import axios from 'axios'

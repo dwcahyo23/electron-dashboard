@@ -1,3 +1,4 @@
+import { createAxiosInstances } from '@renderer/utils/apiClient'
 import { UseMutationOptions, UseMutationResult, useMutation } from '@tanstack/react-query'
 import axios from 'axios'
 import { useRef } from 'react'
@@ -9,7 +10,9 @@ const postData = async <TResponse, TData>(
   signal: AbortSignal
 ): Promise<TResponse> => {
   try {
-    const response = await axios.post<TResponse>(endpoint, data, {
+    const { baseApi } = await createAxiosInstances()
+
+    const response = await baseApi.post<TResponse>(endpoint, data, {
       signal // Mengaitkan signal ke request
     })
     return response.data

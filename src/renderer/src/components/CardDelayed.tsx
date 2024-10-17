@@ -1,5 +1,5 @@
 import { Badge, Box, Card, Flex, Grid, Group, Text } from '@mantine/core'
-import { DelayedToday } from '@renderer/types/Api'
+import { DelayedToday } from '@renderer/types/@custom'
 import { useEffect, useState } from 'react'
 import QRCode from 'react-qr-code'
 import classes from '../styles/CardGradient.module.css'
